@@ -1,5 +1,5 @@
 {
-    "name": "perfectneeds/serviec-bundle",
+    "name": "perfectneeds/service-bundle",
     "description": "All PN utils functions and twig functions",
     "type": "libaray",
     "license": "MIT",
@@ -9,5 +9,6 @@
             "email": "peter.nassef@gmail.com"
         }
     ],
+    "minimum-stability": "stable",
     "require": {}
 }
