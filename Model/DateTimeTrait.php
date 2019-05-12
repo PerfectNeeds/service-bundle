@@ -1,6 +1,6 @@
 <?php
 
-namespace PNServiceBundle\Model;
+namespace PN\ServiceBundle\Model;
 
 trait DateTimeTrait {
 

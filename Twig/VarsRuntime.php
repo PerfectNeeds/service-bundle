@@ -1,11 +1,11 @@
 <?php
 
-namespace PNServiceBundle\Twig;
+namespace PN\ServiceBundle\Twig;
 
 use Twig\Extension\RuntimeExtensionInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use PN\Bundle\CMSBundle\Entity\DynamicContentAttribute;
-use PNServiceBundle\Service\ContainerParameterService;
+use PN\ServiceBundle\Service\ContainerParameterService;
 use PN\Utils\Date,
     PN\Utils\Number;
 

@@ -1,11 +1,11 @@
 <?php
 
-namespace PNServiceBundle\Twig;
+namespace PN\ServiceBundle\Twig;
 
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
 use Twig\TwigFunction;
-use PNServiceBundle\Twig\VarsRuntime;
+use PN\ServiceBundle\Twig\VarsRuntime;
 
 /**
  * @author Peter Nassef <peter.nassef@gmail.com>

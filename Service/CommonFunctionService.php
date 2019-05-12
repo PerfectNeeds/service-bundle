@@ -1,6 +1,6 @@
 <?php
 
-namespace PNServiceBundle\Service;
+namespace PN\ServiceBundle\Service;
 
 use Symfony\Component\DependencyInjection\ContainerInterface;
 

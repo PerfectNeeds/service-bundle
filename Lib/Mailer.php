@@ -1,6 +1,6 @@
 <?php
 
-namespace PNServiceBundle\Lib;
+namespace PN\ServiceBundle\Lib;
 
 /**
  * Mailer

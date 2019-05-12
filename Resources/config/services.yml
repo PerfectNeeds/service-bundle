@@ -8,9 +8,9 @@ services:
         # if you need to do this, you can override this setting on individual services
         public: false
         
-    PNServiceBundle\Twig\:
+    PN\ServiceBundle\Twig\:
         resource: '../../Twig/*'
         
-    PNServiceBundle\Service\:
+    PN\ServiceBundle\Service\:
         public: true
         resource: '../../Service/*'
