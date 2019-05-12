@@ -1,7 +1,9 @@
 {
     "name": "perfectneeds/service-bundle",
     "description": "All PN utils functions and twig functions",
-    "type": "libaray",
+    "keywords": ["PerfectNeeds", "Service bundle"],
+    "homepage": "http://perfectneeds.github.com",
+    "type": "symfony-bundle",
     "license": "MIT",
     "authors": [
         {
@@ -9,6 +11,10 @@
             "email": "peter.nassef@gmail.com"
         }
     ],
-    "minimum-stability": "stable",
+    "autoload": {
+        "psr-4": {
+            "PNServiceBundle\\": ""
+        }
+    },
     "require": {}
 }
