@@ -1,0 +1,13 @@
+{
+    "name": "perfectneeds/serviec-bundle",
+    "description": "All PN utils functions and twig functions",
+    "type": "libaray",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Peter Nassef",
+            "email": "peter.nassef@gmail.com"
+        }
+    ],
+    "require": {}
+}
