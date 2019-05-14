@@ -6,7 +6,7 @@ use PN\Bundle\UserBundle\Entity\RefreshToken;
 
 class PushNotification {
 
-    private $appId = "AIzaSyAyPjKj6lEdMc-5z3-s5uWBJ9M65zZvBT8";
+    private $appId;
     private $url = "https://fcm.googleapis.com/fcm/send";
 
     public function __construct($appId) {
