@@ -7,16 +7,22 @@ namespace PNService\Utils;
  */
 class BulkSMS {
 
-    private static $username = '';
-    private static $password = '';
-    private static $origin = 'Deepo';
-    private static $url = 'http://www.voodoosms.com/vapi/server/sendSMS';
+    private $username = '';
+    private $password = '';
+    private $origin = 'Deepo';
+    private $url = 'http://www.voodoosms.com/vapi/server/sendSMS';
 
     /*
      * Your phone number, including country code, i.e. +44123123123 in this case:
      */
 
-    public static function sendMessage($message, $mobileNumber) {
+    public function __construct($username, $password, $origin) {
+        $this->username = $username;
+        $this->password = $password;
+        $this->origin = $origin;
+    }
+
+    public function sendMessage($message, $mobileNumber) {
 //        dump($message . "-" . $mobileNumber);
 //        $mail = array(
 //            'subject' => 'SMS Verfiy code',
