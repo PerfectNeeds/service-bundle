@@ -2,7 +2,7 @@
 
 namespace PN\ServiceBundle\Utils;
 
-use PNService\Utils\Validate;
+use PN\ServiceBundle\Utils\Validate;
 
 /**
  * Filename      : general
@@ -71,11 +71,11 @@ class SQL {
         $temp = '(';
         foreach ($searchArr as $searchSentence) {
             if (self::validateSS($searchSentence)) {
-                if($LIKE){
-                    $sqlCondition = ' OR '.$field . ' LIKE "%' . trim($searchSentence) . '%"';
-                }else{
+                if ($LIKE) {
+                    $sqlCondition = ' OR ' . $field . ' LIKE "%' . trim($searchSentence) . '%"';
+                } else {
                     $sqlCondition = $field . ' LIKE "%' . trim($searchSentence) . '%"';
-                    $LIKE=TRUE;
+                    $LIKE = TRUE;
                 }
 
 
@@ -97,7 +97,9 @@ class SQL {
     public static function setRegEXP($value) {
         return ($value);
     }
+
     public static function strToDateCreate($str, $format) {
         return "STR_TO_DATE('" . $str . "','" . $format . "')";
     }
+
 }
