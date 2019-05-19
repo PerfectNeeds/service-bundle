@@ -1,6 +1,6 @@
 <?php
 
-namespace PNService\Utils;
+namespace PN\ServiceBundle\Utils;
 
 /*
  * This file is part of the VCard PHP Class from Jeroen Desloovere.

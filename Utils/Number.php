@@ -1,6 +1,6 @@
 <?php
 
-namespace PNService\Utils;
+namespace PN\ServiceBundle\Utils;
 
 Use Symfony\Component\HttpFoundation\Session\Session;
 
