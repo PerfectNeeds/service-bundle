@@ -28,14 +28,13 @@ class VarsExtension extends AbstractExtension {
 
     public function getFunctions() {
         return array(
-            new TwigFunction('getDCA', array(VarsRuntime::class, 'getDynamicContentAttribute')),
             new TwigFunction('getParameter', array(VarsRuntime::class, 'getContainerParameter')),
             new TwigFunction('staticVariable', array(VarsRuntime::class, 'staticVariable')),
         );
     }
 
     public function getName() {
-        return 'service.twig.extension';
+        return 'pn.service.twig.extension';
     }
 
 }

@@ -4,7 +4,6 @@ namespace PN\ServiceBundle\Twig;
 
 use Twig\Extension\RuntimeExtensionInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use PN\Bundle\CMSBundle\Entity\DynamicContentAttribute;
 use PN\ServiceBundle\Service\ContainerParameterService;
 use PN\Utils\Date,
     PN\Utils\Number;
@@ -52,27 +51,6 @@ class VarsRuntime implements RuntimeExtensionInterface {
 
     public function dateTimeFormat(\DateTime $date) {
         return $date->format(Date::DATE_FORMAT6);
-    }
-
-    /**
-     * get DynamicContentAttribute by ID
-     *
-     * @example {{ getDCA(11) }}
-     *
-     * @param type $dynamicContentAttributeId
-     * @return string
-     */
-    public function getDynamicContentAttribute($dynamicContentAttributeId) {
-        $dynamicContentAttribute = $this->em->getRepository('CMSBundle:DynamicContentAttribute')->find($dynamicContentAttributeId);
-        if (!$dynamicContentAttribute) {
-            return "";
-        }
-        if ($dynamicContentAttribute->getType() == DynamicContentAttribute::TYPE_IMAGE and $dynamicContentAttribute->getImage() != null) {
-            $manager = $this->container->get('assets.packages');
-            dump($manager);
-            return $manager->getUrl($dynamicContentAttribute->getImage()->getAssetPath());
-        }
-        return $dynamicContentAttribute->getValue();
     }
 
     public function currencyWithFormat($price) {
