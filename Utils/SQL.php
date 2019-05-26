@@ -1,8 +1,8 @@
 <?php
 
-namespace PN\ServiceBundle\Utils;
+namespace PN\Service\Utils;
 
-use PN\ServiceBundle\Utils\Validate;
+use PNService\Utils\Validate;
 
 /**
  * Filename      : general

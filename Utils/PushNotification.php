@@ -6,23 +6,19 @@ use PN\Bundle\UserBundle\Entity\RefreshToken;
 
 class PushNotification {
 
-    private $appId;
-    private $url = "https://fcm.googleapis.com/fcm/send";
+    private static $appId = "AIzaSyAyPjKj6lEdMc-5z3-s5uWBJ9M65zZvBT8";
+    private static $url = "https://fcm.googleapis.com/fcm/send";
 
-    public function __construct($appId) {
-        $this->appId = $appId;
-    }
-
-    private function pushNotification($fields) {
+    private static function pushNotification($fields) {
         $json_message = json_encode($fields);
         $headers = array(
             'Content-Type: application/json',
             'Content-Length: ' . strlen($json_message),
-            "Authorization:key=" . $this->appId,
+            "Authorization:key=" . self::$appId,
         );
 
         $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, $this->url);
+        curl_setopt($ch, CURLOPT_URL, self::$url);
         curl_setopt($ch, CURLOPT_POST, true);
         curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -30,7 +26,7 @@ class PushNotification {
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
         curl_setopt($ch, CURLOPT_POSTFIELDS, $json_message);
 
-        //finally executing the curl request
+        //finally executing the curl request 
         $result = curl_exec($ch);
         if ($result === FALSE) {
             die('FCM Send Error: ' . curl_error($ch));
@@ -39,16 +35,16 @@ class PushNotification {
         return $result;
     }
 
-    public function pushNotificationMultiDevice($user, $title, $message, $body, $timeToLive = NULL) {
+    public static function pushNotificationMultiDevice($user, $title, $message, $body, $timeToLive = NULL) {
         $iosTokens = $user->getRefreshTokensByDevice(RefreshToken::DEVICE_IOS);
         $androidTokens = $user->getRefreshTokensByDevice(RefreshToken::DEVICE_ANDROID);
 
-        $this->pushNotificationDataIos($iosTokens, $title, $message, $body, $timeToLive);
-        $this->pushNotificationDataAndroid($androidTokens, $title, $message, $body);
+        self::pushNotificationDataIos($iosTokens, $title, $message, $body, $timeToLive);
+        self::pushNotificationDataAndroid($androidTokens, $title, $message, $body);
         return true;
     }
 
-    public function pushNotificationDataIos($tokens, $title, $message, $body, $timeToLive = NULL, $badge = 1) {
+    public static function pushNotificationDataIos($tokens, $title, $message, $body, $timeToLive = NULL, $badge = 1) {
         if (count($tokens) == 0) {
             return TRUE;
         }
@@ -72,7 +68,7 @@ class PushNotification {
                 $fields['data'][$key] = $value;
             }
         }
-        return $this->pushNotification($fields);
+        return self::pushNotification($fields);
     }
 
     public static function pushNotificationDataAndroid($tokens, $title, $message, $body) {
@@ -91,14 +87,14 @@ class PushNotification {
                 $fields['data'][$key] = $value;
             }
         }
-        return $this->pushNotification($fields);
+        return self::pushNotification($fields);
     }
 
-    public function checkExpiredRefreshToken($token) {
+    public static function checkExpiredRefreshToken($token) {
         $headers = array(
             'Content-Type: application/json',
             'Content-Length: ' . 0,
-            "Authorization:key=" . $this->appId,
+            "Authorization:key=" . self::$appId,
         );
 
         $ch = curl_init();
@@ -109,7 +105,7 @@ class PushNotification {
         curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, true);
 
-        //finally executing the curl request
+        //finally executing the curl request 
         $result = curl_exec($ch);
         if ($result === FALSE) {
             die('FCM Send Error: ' . curl_error($ch));
