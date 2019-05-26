@@ -49,4 +49,34 @@ class ContainerParameterService {
         return $parent[$name];
     }
 
+    public function has($name, $parent = null) {
+        if (null === $parent) {
+            $parent = $this->container->getParameterBag()->all();
+        }
+        $name = strtolower($name);
+        if (!array_key_exists($name, $parent)) {
+            if (!$name) {
+                return false;
+            }
+            if (false !== strpos($name, '.')) {
+                $parts = explode('.', $name);
+                $key = array_shift($parts);
+                if (isset($parent[$key])) {
+                    return $this->has(implode('.', $parts), $parent[$key]);
+                }
+            }
+            $alternatives = [];
+            foreach ($parent as $key => $parameterValue) {
+                $lev = levenshtein($name, $key);
+                if ($lev <= strlen($name) / 3 || false !== strpos($key, $name)) {
+                    $alternatives[] = $key;
+                }
+            }
+            return false;
+        }
+
+
+        return true;
+    }
+
 }

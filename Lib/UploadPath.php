@@ -4,7 +4,7 @@ namespace PN\ServiceBundle\Lib;
 
 /**
  * get upload Path
- * 
+ *
  * @author Peter Nassef <peter.nassef@perfectneeds.com>
  */
 class UploadPath {
@@ -14,7 +14,7 @@ class UploadPath {
      * @return string
      */
     private static function getWebRoot() {
-        if (file_exists(realpath(__DIR__ . '/../../../../../public_html'))) {
+        if (file_exists(realpath(__DIR__ . '/../../../../public_html'))) {
             return self::addlSash("public_html");
         } else {
             return self::addlSash("web");
@@ -23,7 +23,7 @@ class UploadPath {
 
     /**
      * Get the absolute path of the <b>upload</b> directory
-     * 
+     *
      * @param string $directory
      * @return string
      */
@@ -42,7 +42,7 @@ class UploadPath {
     public static function getRootDir($directory = null, $createIfNotExist = false) {
         // the absolute directory extension where uploaded
         // documents should be saved
-        $path = __DIR__ . '/../../../../../' . self::getWebRoot();
+        $path = __DIR__ . '/../../../../' . self::getWebRoot();
         if ($directory !== null) {
             $path .= self::addlSash($directory);
         }
@@ -54,7 +54,7 @@ class UploadPath {
 
     /**
      * Get Upload folder name
-     * 
+     *
      * @param string $directory
      * @return string
      */
@@ -66,7 +66,7 @@ class UploadPath {
 
     /**
      * Add forward slash to directory
-     * 
+     *
      * @param type $directory
      * @return string
      */
