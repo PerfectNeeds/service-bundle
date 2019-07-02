@@ -63,7 +63,7 @@ class VarsRuntime implements RuntimeExtensionInterface {
         $str = str_replace($search, '', $str);
 
         if ($length != null AND strlen($str) > $length) {
-            $str = substr($str, 0, strpos(wordwrap($str, $length), "\n")) . '...';
+            $str = htmlspecialchars_decode(substr($str, 0, strpos(wordwrap($str, $length), "\n"))) . '...';
         }
         return $str;
     }
