@@ -28,6 +28,10 @@ class SQL {
         $in = FALSE;
         $return = '';
 
+        if (!is_array($prmtrValuesArr)) {
+            $prmtrValuesArr = array($prmtrValuesArr);
+        }
+
         while (count($prmtrValuesArr) > 0) {
             $value = @array_pop($prmtrValuesArr);
             if (Validate::not_null($value)) {
@@ -46,6 +50,10 @@ class SQL {
         $temp = '';
         $realElementExist = FALSE;
         $in = FALSE;
+
+        if (!is_array($prmtrValuesArr)) {
+            $prmtrValuesArr = array($prmtrValuesArr);
+        }
 
         while (count($prmtrValuesArr) > 0) {
             $value = @array_pop($prmtrValuesArr);
