@@ -5,6 +5,7 @@ namespace PN\ServiceBundle\Twig;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
 use Twig\TwigFunction;
+use Twig\TwigTest;
 use PN\ServiceBundle\Twig\VarsRuntime;
 
 /**
@@ -31,6 +32,12 @@ class VarsExtension extends AbstractExtension {
             new TwigFunction('getParameter', array(VarsRuntime::class, 'getContainerParameter')),
             new TwigFunction('staticVariable', array(VarsRuntime::class, 'staticVariable')),
         );
+    }
+
+    public function getTests() {
+        return [
+            new TwigTest('instanceof', array(VarsRuntime::class, 'isInstanceof')),
+        ];
     }
 
     public function getName() {
