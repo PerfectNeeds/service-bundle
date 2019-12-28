@@ -97,7 +97,7 @@ class SQL {
 
 //VALIDATE SEARCH SENTENCE
     public static function validateSS($searchSentence) {
-        if (!Validate::not_null($searchSentence) || count($searchSentence) < 1)
+        if (!Validate::not_null($searchSentence) || in_array($searchSentence))
             return FALSE;
         return self::setRegEXP(trim($searchSentence));
     }

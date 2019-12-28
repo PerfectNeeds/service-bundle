@@ -5,8 +5,8 @@ namespace PN\ServiceBundle\Twig;
 use Twig\Extension\RuntimeExtensionInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use PN\ServiceBundle\Service\ContainerParameterService;
-use PN\Utils\Date,
-    PN\Utils\Number;
+use PN\ServiceBundle\Utils\Date,
+    PN\ServiceBundle\Utils\Number;
 
 /**
  * @author Peter Nassef <peter.nassef@gmail.com>
@@ -54,7 +54,7 @@ class VarsRuntime implements RuntimeExtensionInterface {
     }
 
     public function currencyWithFormat($price) {
-        return \PN\Utils\Number::currencyWithFormat($price);
+        return Number::currencyWithFormat($price);
     }
 
     public function rawText($str, $length = null) {
