@@ -100,7 +100,7 @@ class Date {
         if ($iDateTo >= $iDateFrom) {
             array_push($aryRange, date(self::DATE_FORMAT2, $iDateFrom)); // first entry
             while ($iDateFrom < $iDateTo) {
-                $iDateFrom+=86400; // add 24 hours
+                $iDateFrom += 86400; // add 24 hours
                 array_push($aryRange, date(self::DATE_FORMAT2, $iDateFrom));
             }
         }
@@ -351,6 +351,11 @@ class Date {
         return $myDateTime = \DateTime::createFromFormat($fromFormat, $date)->format($toFormat);
     }
 
+    public static function convertTimeToGMTIsoFormate(\DateTime $date) {
+        $date->setTimezone(new \DateTimeZone('GMT'));
+        return $date->format("H:i:sO");
+    }
+
     public static function convertDateToGMTIsoFormate(\DateTime $date) {
         $date->setTimezone(new \DateTimeZone('GMT'));
         return $date->format(\DateTime::ISO8601);
@@ -361,6 +366,7 @@ class Date {
         $myDateTime = \DateTime::createFromFormat($fromFormat, $date);
         return $myDateTime;
     }
+
 }
 
 //Initialize the system date
