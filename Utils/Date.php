@@ -11,7 +11,7 @@ class Date {
     CONST DATE_FORMAT3 = 'd/m/Y';
     CONST DATE_FORMAT4 = 'Y-m';
     CONST DATE_FORMAT5 = 'm/Y';
-    CONST DATE_FORMAT6 = 'd/m/Y H:i A';
+    CONST DATE_FORMAT6 = 'd/m/Y h:i A';
     CONST DATE_FORMAT7 = 'd M Y';
     CONST DATE_FORMAT_D = 'd';
     CONST DATE_FORMAT_M = 'm';
