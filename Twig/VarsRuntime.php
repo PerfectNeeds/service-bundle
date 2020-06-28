@@ -2,11 +2,11 @@
 
 namespace PN\ServiceBundle\Twig;
 
-use Twig\Extension\RuntimeExtensionInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use PN\ServiceBundle\Service\ContainerParameterService;
-use PN\ServiceBundle\Utils\Date,
-    PN\ServiceBundle\Utils\Number;
+use PN\ServiceBundle\Utils\Date;
+use PN\ServiceBundle\Utils\Number;
+use Symfony\Component\DependencyInjection\ContainerInterface;
+use Twig\Extension\RuntimeExtensionInterface;
 
 /**
  * @author Peter Nassef <peter.nassef@gmail.com>
@@ -59,7 +59,7 @@ class VarsRuntime implements RuntimeExtensionInterface {
 
     public function rawText($str, $length = null) {
         $str = strip_tags($str);
-        $search = array('&rsquo;', '&nbsp;', '&bull;', "\n", "\t");
+        $search = array('&rsquo;', '&nbsp;', '&bull;', "\n", "\t", "\r", "\v", "\e");
         $str = str_replace($search, '', $str);
 
         if ($length != null AND strlen($str) > $length) {
