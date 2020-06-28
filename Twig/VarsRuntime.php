@@ -59,7 +59,7 @@ class VarsRuntime implements RuntimeExtensionInterface {
 
     public function rawText($str, $length = null) {
         $str = strip_tags($str);
-        $search = array('&rsquo;', '&nbsp;', '&bull;');
+        $search = array('&rsquo;', '&nbsp;', '&bull;', "\n", "\t");
         $str = str_replace($search, '', $str);
 
         if ($length != null AND strlen($str) > $length) {
