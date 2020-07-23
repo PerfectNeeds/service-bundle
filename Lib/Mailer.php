@@ -75,17 +75,17 @@ class Mailer {
         if (!$this->body) {
             throw new \Exception("Cannot send message without body");
         }
-        if ($this->attach != NULL AND ! file_exists($this->attach)) {
+        if ($this->attach != NULL AND !file_exists($this->attach)) {
             throw new \Exception("Attached file is not found");
         }
     }
 
     private function sendBySwiftMailer() {
-        $message = \Swift_Message::newInstance()
-                ->setSubject($this->subject)
-                ->setFrom($this->from)
-                ->setTo($this->to)
-                ->setBody($this->body, $this->contentType);
+        $message = (new \Swift_Message($this->subject))
+            ->setSubject($this->subject)
+            ->setFrom($this->from)
+            ->setTo($this->to)
+            ->setBody($this->body, $this->contentType);
 
         if ($this->bcc != NULL) {
             $message->setBcc($this->bcc);
@@ -133,8 +133,8 @@ class Mailer {
      * If $name is passed and the first parameter is a string, this name will be
      * associated with the address.
      *
-     * @param mixed  $addresses
-     * @param string $name      optional
+     * @param mixed $addresses
+     * @param string $name optional
      *
      * @return $this
      */
@@ -144,7 +144,7 @@ class Mailer {
         }
 
         if (!$this->to) {
-            $this->to = (array) $addresses;
+            $this->to = (array)$addresses;
         }
 
         return $this;
@@ -192,7 +192,7 @@ class Mailer {
      * associated with the address.
      *
      * @param string|array $addresses
-     * @param string       $name      optional
+     * @param string $name optional
      *
      * @return $this
      */
@@ -202,7 +202,7 @@ class Mailer {
         }
 
         if (!$this->from) {
-            $this->from = (array) $addresses;
+            $this->from = (array)$addresses;
         }
 
         return $this;
@@ -220,7 +220,7 @@ class Mailer {
     /**
      * Set the body of this entity, either as a string.
      *
-     * @param mixed  $body
+     * @param mixed $body
      *
      * @return $this
      */
@@ -251,8 +251,8 @@ class Mailer {
      * If $name is passed and the first parameter is a string, this name will be
      * associated with the address.
      *
-     * @param mixed  $addresses
-     * @param string $name      optional
+     * @param mixed $addresses
+     * @param string $name optional
      *
      * @return $this
      */
@@ -262,7 +262,7 @@ class Mailer {
         }
 
         if (!$this->bcc) {
-            $this->bcc = (array) $addresses;
+            $this->bcc = (array)$addresses;
         }
 
         return $this;
@@ -283,8 +283,8 @@ class Mailer {
      * If $name is passed and the first parameter is a string, this name will be
      * associated with the address.
      *
-     * @param mixed  $addresses
-     * @param string $name      optional
+     * @param mixed $addresses
+     * @param string $name optional
      *
      * @return $this
      */
@@ -294,7 +294,7 @@ class Mailer {
         }
 
         if (!$this->cc) {
-            $this->cc = (array) $addresses;
+            $this->cc = (array)$addresses;
         }
 
         return $this;
