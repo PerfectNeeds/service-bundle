@@ -12,59 +12,72 @@ use Twig\Extension\RuntimeExtensionInterface;
  * @author Peter Nassef <peter.nassef@gmail.com>
  * @version 1.0
  */
-class VarsRuntime implements RuntimeExtensionInterface {
+class VarsRuntime implements RuntimeExtensionInterface
+{
 
     private $container;
     private $em;
 
-    public function __construct(ContainerInterface $container) {
+    public function __construct(ContainerInterface $container)
+    {
         $this->container = $container;
         $this->em = $container->get('doctrine')->getManager();
     }
 
-    public function getContainerParameter($name) {
+    public function getContainerParameter($name)
+    {
         return $this->container->get(ContainerParameterService::class)->get($name);
     }
 
-    public function staticVariable($class, $property) {
+    public function staticVariable($class, $property)
+    {
         if (property_exists($class, $property)) {
             return $class::$$property;
         }
+
         return null;
     }
 
-    public function className($object) {
+    public function className($object)
+    {
         return (new \ReflectionClass($object))->getShortName();
     }
 
-    public function priceFormat($price) {
+    public function priceFormat($price)
+    {
         return Number::currencyWithFormat($price, "EGP");
     }
 
-    public function dateFormat(\DateTime $date) {
+    public function dateFormat(\DateTime $date)
+    {
         return $date->format(Date::DATE_FORMAT3);
     }
 
-    public function timeFormat(\DateTime $date) {
+    public function timeFormat(\DateTime $date)
+    {
         return $date->format(Date::DATE_FORMAT_TIME);
     }
 
-    public function dateTimeFormat(\DateTime $date) {
+    public function dateTimeFormat(\DateTime $date)
+    {
         return $date->format(Date::DATE_FORMAT6);
     }
 
-    public function currencyWithFormat($price) {
+    public function currencyWithFormat($price)
+    {
         return Number::currencyWithFormat($price);
     }
 
-    public function rawText($str, $length = null) {
+    public function rawText($str, $length = null)
+    {
         $str = strip_tags($str);
         $search = array('&rsquo;', '&nbsp;', '&bull;', "\n", "\t", "\r", "\v", "\e");
         $str = str_replace($search, '', $str);
 
         if ($length != null AND strlen($str) > $length) {
-            $str = htmlspecialchars_decode(substr($str, 0, strpos(wordwrap($str, $length), "\n"))) . '...';
+            $str = htmlspecialchars_decode(substr($str, 0, strpos(wordwrap($str, $length), "\n"))).'...';
         }
+
         return $str;
     }
 
@@ -73,8 +86,19 @@ class VarsRuntime implements RuntimeExtensionInterface {
      * @param $instance
      * @return bool
      */
-    public function isInstanceof($var, $instance) {
+    public function isInstanceof($var, $instance)
+    {
         return $var instanceof $instance;
     }
 
+    public function jsonDecode($str)
+    {
+        return json_decode($str);
+    }
+
+    public function jsonEncode($str)
+    {
+        return trim(json_encode($str), '"');
+    }
+    
 }
