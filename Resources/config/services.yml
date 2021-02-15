@@ -14,3 +14,7 @@ services:
     PN\ServiceBundle\Service\:
         public: true
         resource: '../../Service/*'
+
+    PN\ServiceBundle\EventListener\DateTimeSubscriber:
+        tags:
+            - { name: 'doctrine.event_subscriber' }
