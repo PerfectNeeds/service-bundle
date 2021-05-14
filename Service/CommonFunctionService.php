@@ -69,6 +69,9 @@ class CommonFunctionService {
         /** @var $params \Symfony\Component\Routing\Route */
         foreach ($allRoutes as $route => $params) {
             $defaults = $params->getDefaults();
+            if (!array_key_exists("_controller", $defaults)) {
+                continue;
+            }
             $controller = $defaults['_controller'];
             $isExclude = $this->array_search_partial($excludeBundles, $controller);
             if (isset($defaults['_controller']) and $isExclude == false and strpos($route, "_edit") !== false) {
