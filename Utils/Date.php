@@ -16,6 +16,7 @@ class Date {
     CONST DATE_FORMAT_D = 'd';
     CONST DATE_FORMAT_M = 'm';
     CONST DATE_FORMAT_Y = 'Y';
+    CONST DATE_FORMAT_TIME = 'h:i A';
 
     public function __construct() {
         self::open();
