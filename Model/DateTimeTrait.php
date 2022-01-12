@@ -60,7 +60,7 @@ trait DateTimeTrait {
 
         return $this;
     }
-    
+
     public function getModifiedBy() {
         return $this->modifiedBy;
     }

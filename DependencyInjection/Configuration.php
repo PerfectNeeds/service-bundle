@@ -16,8 +16,7 @@ class Configuration implements ConfigurationInterface {
      * {@inheritdoc}
      */
     public function getConfigTreeBuilder() {
-        $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('pn_service');
+        $treeBuilder = new TreeBuilder('pn_service');
 
         // Here you should define the parameters that are allowed to
         // configure your bundle. See the documentation linked above for
