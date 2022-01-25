@@ -2,6 +2,7 @@
 
 namespace PN\ServiceBundle\Twig;
 
+use Doctrine\ORM\EntityManagerInterface;
 use PN\ServiceBundle\Service\ContainerParameterService;
 use PN\ServiceBundle\Utils\Date;
 use PN\ServiceBundle\Utils\Number;
@@ -15,18 +16,18 @@ use Twig\Extension\RuntimeExtensionInterface;
 class VarsRuntime implements RuntimeExtensionInterface
 {
 
-    private $container;
     private $em;
+    private $containerParameterService;
 
-    public function __construct(ContainerInterface $container)
+    public function __construct(EntityManagerInterface $em, ContainerParameterService $containerParameterService)
     {
-        $this->container = $container;
-        $this->em = $container->get('doctrine')->getManager();
+        $this->containerParameterService = $containerParameterService;
+        $this->em = $em;
     }
 
     public function getContainerParameter($name)
     {
-        return $this->container->get(ContainerParameterService::class)->get($name);
+        return $this->containerParameterService->get($name);
     }
 
     public function staticVariable($class, $property)
@@ -74,7 +75,7 @@ class VarsRuntime implements RuntimeExtensionInterface
         $search = array('&rsquo;', '&nbsp;', '&bull;', "\n", "\t", "\r", "\v", "\e");
         $str = str_replace($search, '', $str);
 
-        if ($length != null AND strlen($str) > $length) {
+        if ($length != null and strlen($str) > $length) {
             $str = htmlspecialchars_decode(substr($str, 0, strpos(wordwrap($str, $length), "\n"))).'...';
         }
 
@@ -100,5 +101,5 @@ class VarsRuntime implements RuntimeExtensionInterface
     {
         return trim(json_encode($str), '"');
     }
-    
+
 }

@@ -16,23 +16,30 @@ class UserService
 
     public function getUser()
     {
-        return $this->tokenStorage->getToken()->getUser();
+        $token = $this->tokenStorage->getToken();
+        if (!$token) {
+            return null;
+        }
+
+        return $token->getUser();
     }
 
-    public function getUserName()
+    public function getUserName(): string
     {
-        if ('cli' === PHP_SAPI) {
-            return "System-CLI";
-        }
-
         $user = $this->getUser();
-        if (method_exists($user, 'getFullName') == true) {
-            $userName = $user->getFullName();
-        } else {
-            $userName = $user->getUserName();
+        if ($user === null) {
+            return 'none';
+        } elseif ('cli' === PHP_SAPI) {
+            return "System-CLI";
+        } elseif (method_exists($user, 'getFullName') == true) {
+            return $user->getFullName();
+        } elseif (method_exists($user, 'getName') == true) {
+            return $user->getFullName();
+        } elseif (method_exists($user, 'getUserName') == true) {
+            return $user->getUserName();
         }
 
-        return $userName;
+        return "none";
     }
 
 }

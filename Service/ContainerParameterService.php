@@ -4,6 +4,7 @@ namespace PN\ServiceBundle\Service;
 
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\DependencyInjection\Exception\ParameterNotFoundException;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
 /**
  * @author Peter Nassef <peter.nassef@gmail.com>
@@ -11,10 +12,10 @@ use Symfony\Component\DependencyInjection\Exception\ParameterNotFoundException;
  */
 class ContainerParameterService {
 
-    private $container;
+    private $parameterBag;
 
-    public function __construct(ContainerInterface $container) {
-        $this->container = $container;
+    public function __construct(ParameterBagInterface $parameterBag) {
+        $this->parameterBag = $parameterBag;
     }
 
     /**
@@ -22,7 +23,7 @@ class ContainerParameterService {
      */
     public function get($name, $parent = null) {
         if (null === $parent) {
-            $parent = $this->container->getParameterBag()->all();
+            $parent = $this->parameterBag->all();
         }
         $name = strtolower($name);
         if (!array_key_exists($name, $parent)) {
@@ -51,7 +52,7 @@ class ContainerParameterService {
 
     public function has($name, $parent = null) {
         if (null === $parent) {
-            $parent = $this->container->getParameterBag()->all();
+            $parent = $this->parameterBag->all();
         }
         $name = strtolower($name);
         if (!array_key_exists($name, $parent)) {

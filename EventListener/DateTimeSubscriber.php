@@ -2,23 +2,22 @@
 
 namespace PN\ServiceBundle\EventListener;
 
-use Doctrine\Common\EventSubscriber;
+use Doctrine\Bundle\DoctrineBundle\EventSubscriber\EventSubscriberInterface;
 use Doctrine\ORM\Events;
 use Doctrine\Persistence\Event\LifecycleEventArgs;
 use PN\ServiceBundle\Interfaces\DateTimeInterface;
-use PN\ServiceBundle\Service\UserService;
-use Psr\Container\ContainerInterface;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
-class DateTimeSubscriber implements EventSubscriber
+class DateTimeSubscriber implements EventSubscriberInterface
 {
-    private $container;
+    private $tokenStorage;
 
-    public function __construct(ContainerInterface $container)
+    public function __construct(TokenStorageInterface $tokenStorage)
     {
-        $this->container = $container;
+        $this->tokenStorage = $tokenStorage;
     }
 
-    public function getSubscribedEvents()
+    public function getSubscribedEvents(): array
     {
         return [
             Events::prePersist,
@@ -31,7 +30,7 @@ class DateTimeSubscriber implements EventSubscriber
         $entity = $args->getObject();
 
         if ($entity instanceof DateTimeInterface) {
-            $username = $this->container->get(UserService::class)->getUserName();
+            $username = $this->getUserName();
             $entity->setModified(new \DateTime(date('Y-m-d H:i:s')));
             $entity->setModifiedBy($username);
 
@@ -44,7 +43,7 @@ class DateTimeSubscriber implements EventSubscriber
         $entity = $args->getObject();
 
         if ($entity instanceof DateTimeInterface) {
-            $username = $this->container->get(UserService::class)->getUserName();
+            $username = $this->getUserName();
 
             $entity->setModified(new \DateTime(date('Y-m-d H:i:s')));
             $entity->setModifiedBy($username);
@@ -56,6 +55,33 @@ class DateTimeSubscriber implements EventSubscriber
                 $entity->setCreator($username);
             }
         }
+    }
+
+    public function getUser()
+    {
+        $token = $this->tokenStorage->getToken();
+        if (!$token) {
+            return null;
+        }
+
+        return $token->getUser();
+    }
+
+    private function getUserName(): string
+    {
+        $user = $this->getUser();
+        if (!$user instanceof User) {
+            return 'none';
+        }
+        if (method_exists($user, 'getName') == true) {
+            $userName = $user->getName();
+        } elseif (method_exists($user, 'getFullName') == true) {
+            $userName = $user->getFullName();
+        } else {
+            $userName = $user->getUserName();
+        }
+
+        return $userName;
     }
 
 }

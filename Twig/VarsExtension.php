@@ -2,7 +2,6 @@
 
 namespace PN\ServiceBundle\Twig;
 
-use PN\ServiceBundle\Twig\VarsRuntime;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
 use Twig\TwigFunction;
@@ -12,10 +11,12 @@ use Twig\TwigTest;
  * @author Peter Nassef <peter.nassef@gmail.com>
  * @version 1.0
  */
-class VarsExtension extends AbstractExtension {
+class VarsExtension extends AbstractExtension
+{
 
-    public function getFilters() {
-        return array(
+    public function getFilters(): array
+    {
+        return [
             new TwigFilter('currencyWithFormat', array(VarsRuntime::class, 'currencyWithFormat')),
             new TwigFilter('rawText', array(VarsRuntime::class, 'rawText')),
             new TwigFilter('pn_json_decode', array(VarsRuntime::class, 'jsonDecode')),
@@ -26,23 +27,26 @@ class VarsExtension extends AbstractExtension {
             new TwigFilter('dateFormat', array(VarsRuntime::class, 'dateFormat')),
             new TwigFilter('timeFormat', array(VarsRuntime::class, 'timeFormat')),
             new TwigFilter('dateTimeFormat', array(VarsRuntime::class, 'dateTimeFormat')),
-        );
+        ];
     }
 
-    public function getFunctions() {
-        return array(
+    public function getFunctions(): array
+    {
+        return [
             new TwigFunction('getParameter', array(VarsRuntime::class, 'getContainerParameter')),
             new TwigFunction('staticVariable', array(VarsRuntime::class, 'staticVariable')),
-        );
+        ];
     }
 
-    public function getTests() {
+    public function getTests(): array
+    {
         return [
             new TwigTest('instanceof', array(VarsRuntime::class, 'isInstanceof')),
         ];
     }
 
-    public function getName() {
+    public function getName(): string
+    {
         return 'pn.service.twig.extension';
     }
 

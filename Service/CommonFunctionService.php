@@ -2,7 +2,9 @@
 
 namespace PN\ServiceBundle\Service;
 
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\Routing\RouterInterface;
 
 /**
  * @author Peter Nassef <peter.nassef@gmail.com>
@@ -10,12 +12,12 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  */
 class CommonFunctionService {
 
-    private $container;
-    protected $entityManager;
+    private $router;
+    private $entityManager;
 
-    public function __construct(ContainerInterface $container) {
-        $this->container = $container;
-        $this->entityManager = $container->get("doctrine.orm.entity_manager");
+    public function __construct(EntityManagerInterface $em, RouterInterface $router) {
+        $this->router = $router;
+        $this->entityManager = $em;
     }
 
     public function getEntitiesWithObject($objectName, $excludeEntities = []) {
@@ -58,7 +60,7 @@ class CommonFunctionService {
     public function getAllEditRoutes() {
         $excludeBundles = ["SeoBundle", "MediaBundle"];
         /** @var $router \Symfony\Component\Routing\Router */
-        $router = $this->container->get('router');
+        $router = $this->router;
         /** @var $collection \Symfony\Component\Routing\RouteCollection */
         $collection = $router->getRouteCollection();
         $allRoutes = $collection->all();

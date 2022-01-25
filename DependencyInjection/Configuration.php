@@ -10,12 +10,11 @@ use Symfony\Component\Config\Definition\ConfigurationInterface;
  *
  * To learn more see {@link http://symfony.com/doc/current/cookbook/bundles/configuration.html}
  */
-class Configuration implements ConfigurationInterface {
+class Configuration implements ConfigurationInterface
+{
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getConfigTreeBuilder() {
+    public function getConfigTreeBuilder(): TreeBuilder
+    {
         $treeBuilder = new TreeBuilder('pn_service');
 
         // Here you should define the parameters that are allowed to
