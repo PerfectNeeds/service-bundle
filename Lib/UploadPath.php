@@ -13,7 +13,7 @@ class UploadPath {
      * Return web root web/ or public_html/
      * @return string
      */
-    private static function getWebRoot() {
+    public static function getWebRoot() {
         if (file_exists(realpath(__DIR__ . '/../../../../public_html'))) {
             return self::addlSash("public_html");
         } else {
