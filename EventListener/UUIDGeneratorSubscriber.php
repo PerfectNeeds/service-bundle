@@ -37,7 +37,7 @@ class UUIDGeneratorSubscriber implements EventSubscriberInterface
         $em = $args->getObjectManager();
         $entity = $args->getObject();
         do {
-            $randomString = General::generateRandomString(8);
+            $randomString = (new General())->generateRandomString(8);
             $uuidIfExist = $em->getRepository(get_class($entity))->findOneBy(["uuid" => $randomString]);
         } while ($uuidIfExist == true);
 

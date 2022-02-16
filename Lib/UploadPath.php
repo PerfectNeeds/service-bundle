@@ -7,15 +7,19 @@ namespace PN\ServiceBundle\Lib;
  *
  * @author Peter Nassef <peter.nassef@perfectneeds.com>
  */
-class UploadPath {
+class UploadPath
+{
 
     /**
      * Return web root web/ or public_html/
      * @return string
      */
-    private static function getWebRoot() {
-        if (file_exists(realpath(__DIR__ . '/../../../../public_html'))) {
+    public static function getWebRoot(): string
+    {
+        if (file_exists(realpath(__DIR__.'/../../../../public_html'))) {
             return self::addlSash("public_html");
+        } elseif (file_exists(realpath(__DIR__.'/../../../../public'))) {
+            return self::addlSash("public");
         } else {
             return self::addlSash("web");
         }
@@ -27,10 +31,11 @@ class UploadPath {
      * @param string $directory
      * @return string
      */
-    public static function getUploadRootDir($directory) {
+    public static function getUploadRootDir(string $directory): string
+    {
         // the absolute directory extension where uploaded
         // documents should be saved
-        return self::getRootDir() . self::getUploadDir($directory);
+        return self::getRootDir().self::getUploadDir($directory);
     }
 
     /**
@@ -39,16 +44,18 @@ class UploadPath {
      * @param boolean $createIfNotExist
      * @return string
      */
-    public static function getRootDir($directory = null, $createIfNotExist = false) {
+    public static function getRootDir(string $directory = null, bool $createIfNotExist = false): string
+    {
         // the absolute directory extension where uploaded
         // documents should be saved
-        $path = __DIR__ . '/../../../../' . self::getWebRoot();
+        $path = __DIR__.'/../../../../'.self::getWebRoot();
         if ($directory !== null) {
             $path .= self::addlSash($directory);
         }
-        if ($createIfNotExist == true and ! file_exists($path)) {
-            mkdir($path, 0777, TRUE);
+        if ($createIfNotExist == true and !file_exists($path)) {
+            mkdir($path, 0777, true);
         }
+
         return $path;
     }
 
@@ -58,20 +65,22 @@ class UploadPath {
      * @param string $directory
      * @return string
      */
-    public static function getUploadDir($directory) {
+    public static function getUploadDir(string $directory): string
+    {
         // get rid of the __DIR__ so it doesn't screw up
         // when displaying uploaded doc/image in the view.
-        return self::addlSash('uploads/' . $directory);
+        return self::addlSash('uploads/'.$directory);
     }
 
     /**
      * Add forward slash to directory
      *
-     * @param type $directory
+     * @param string $directory
      * @return string
      */
-    private static function addlSash($directory) {
-        return rtrim($directory, '/') . '/';
+    private static function addlSash(string $directory): string
+    {
+        return rtrim($directory, '/').'/';
     }
 
 }
