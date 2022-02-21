@@ -74,7 +74,7 @@ class VarsRuntime implements RuntimeExtensionInterface
         $search = array('&rsquo;', '&nbsp;', '&bull;', "\n", "\t", "\r", "\v", "\e");
         $str = str_replace($search, '', $str);
 
-        if ($length != null AND strlen($str) > $length) {
+        if ($length != null and strlen($str) > $length) {
             $str = htmlspecialchars_decode(substr($str, 0, strpos(wordwrap($str, $length), "\n"))).'...';
         }
 
@@ -91,6 +91,11 @@ class VarsRuntime implements RuntimeExtensionInterface
         return $var instanceof $instance;
     }
 
+    public function rawurldecode($str)
+    {
+        return rawurldecode($str);
+    }
+
     public function jsonDecode($str)
     {
         return json_decode($str);
@@ -100,5 +105,5 @@ class VarsRuntime implements RuntimeExtensionInterface
     {
         return trim(json_encode($str), '"');
     }
-    
+
 }
