@@ -2,8 +2,6 @@
 
 namespace PN\ServiceBundle\Twig;
 
-use PN\ServiceBundle\Twig\VarsRuntime;
-use PN\ServiceBundle\Twig\VarsRuntime;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
 use Twig\TwigFunction;
