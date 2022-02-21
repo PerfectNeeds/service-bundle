@@ -21,6 +21,7 @@ class VarsExtension extends AbstractExtension
             new TwigFilter('rawText', array(VarsRuntime::class, 'rawText')),
             new TwigFilter('pn_json_decode', array(VarsRuntime::class, 'jsonDecode')),
             new TwigFilter('pn_json_encode', array(VarsRuntime::class, 'jsonEncode')),
+            new TwigFilter('rawurldecode', array(VarsRuntime::class, 'rawurldecode')),
             new TwigFilter('className', array(VarsRuntime::class, 'className')),
             new TwigFilter('className', array(VarsRuntime::class, 'className')),
             new TwigFilter('priceFormat', array(VarsRuntime::class, 'priceFormat')),

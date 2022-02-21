@@ -92,6 +92,11 @@ class VarsRuntime implements RuntimeExtensionInterface
         return $var instanceof $instance;
     }
 
+    public function rawurldecode($str)
+    {
+        return rawurldecode($str);
+    }
+
     public function jsonDecode($str)
     {
         return json_decode($str);
