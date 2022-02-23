@@ -26,7 +26,7 @@ class SearchText
         return str_replace("  ", " ", $keywords);
     }
 
-    private static function removeDuplicateWords(array $strs)
+    private static function removeDuplicateWords(array $strs): array
     {
         $string = implode(" ", $strs);
         $strings = explode(' ', $string);
