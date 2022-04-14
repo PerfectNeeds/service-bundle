@@ -10,7 +10,7 @@ trait VirtualDeleteTrait {
     protected $deleted = null;
 
     /**
-     * @ORM\Column(name="deleted_by", type="string", length=30, nullable=true)
+     * @ORM\Column(name="deleted_by", type="string", length=255, nullable=true)
      */
     protected $deletedBy = NULL;
 
