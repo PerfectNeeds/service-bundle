@@ -2,12 +2,21 @@
 
 namespace PN\ServiceBundle\Utils;
 
+/**
+ * example
+ *  $MailChimp = new MailChimp('xxxxxxx-us12');
+ *  $listId = "66xxx82a";
+ *  $MailChimp->call("lists/$listId/members", [
+ *  'email_address' => $email,
+ *  'status' => "subscribed",
+ *  ]);
+ */
 class MailChimp
 {
 
-    private $api_key;
-    private $api_endpoint = 'https://<dc>.api.mailchimp.com/2.0';
-    private $verify_ssl = false;
+    private string $api_key;
+    private string $api_endpoint = 'https://<dc>.api.mailchimp.com/3.0';
+    private bool $verify_ssl = false;
 
     /**
      * Create a new instance
@@ -18,16 +27,6 @@ class MailChimp
         $this->api_key = $api_key;
         list(, $datacenter) = explode('-', $this->api_key);
         $this->api_endpoint = str_replace('<dc>', $datacenter, $this->api_endpoint);
-    }
-
-    /**
-     * Validates MailChimp API Key
-     */
-    public function validateApiKey(): bool
-    {
-        $request = $this->call('helper/ping');
-
-        return !empty($request);
     }
 
     /**
@@ -47,20 +46,24 @@ class MailChimp
      * @param array $args Assoc array of parameters to be passed
      * @return array          Assoc array of decoded result
      */
-    private function makeRequest(string $method, array $args =[], int $timeout = 10)
+    private function makeRequest(string $method, array $args = [], int $timeout = 10): bool|array
     {
-        $args['apikey'] = $this->api_key;
-        $url = $this->api_endpoint.'/'.$method.'.json';
+        $url = $this->api_endpoint.'/'.$method;
         $json_data = json_encode($args);
+
         if (function_exists('curl_init') && function_exists('curl_setopt')) {
             $ch = curl_init();
+
             curl_setopt($ch, CURLOPT_URL, $url);
-            curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
+            curl_setopt($ch, CURLOPT_HTTPHEADER, [
+                'Content-Type: application/json',
+                'Authorization: apikey '.$this->api_key,
+            ]);
             curl_setopt($ch, CURLOPT_USERAGENT, 'PHP-MCAPI/2.0');
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
             curl_setopt($ch, CURLOPT_TIMEOUT, $timeout);
-            curl_setopt($ch, CURLOPT_POST, true);
             curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, $this->verify_ssl);
+            curl_setopt($ch, CURLOPT_POST, true);
             curl_setopt($ch, CURLOPT_POSTFIELDS, $json_data);
             curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_0);
             curl_setopt($ch, CURLOPT_ENCODING, '');
@@ -74,6 +77,7 @@ class MailChimp
                     'method' => 'POST',
                     'header' => "Content-type: application/json\r\n".
                         "Connection: close\r\n".
+                        "Authorization: apikey".$this->api_key."\r\n".
                         "Content-length: ".strlen($json_data)."\r\n",
                     'content' => $json_data,
                 ),
@@ -84,5 +88,3 @@ class MailChimp
     }
 
 }
-
-?>
