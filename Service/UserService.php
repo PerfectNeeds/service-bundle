@@ -31,11 +31,11 @@ class UserService
             return 'none';
         } elseif ('cli' === PHP_SAPI) {
             return "System-CLI";
-        } elseif (method_exists($user, 'getFullName') == true) {
+        } elseif (method_exists($user, 'getFullName')) {
             return $user->getFullName();
-        } elseif (method_exists($user, 'getName') == true) {
-            return $user->getFullName();
-        } elseif (method_exists($user, 'getUserName') == true) {
+        } elseif (method_exists($user, 'getName')) {
+            return $user->getName();
+        } elseif (method_exists($user, 'getUserName')) {
             return $user->getUserName();
         }
 
