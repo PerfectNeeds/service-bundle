@@ -26,12 +26,12 @@ class UserService
 
     public function getUserName(): string
     {
-        $user = $this->getUser();
-        if ($user === null) {
-            return 'none';
-        } elseif ('cli' === PHP_SAPI) {
+        if ('cli' === PHP_SAPI) {
             return "System-CLI";
-        } elseif (method_exists($user, 'getFullName')) {
+        }
+
+        $user = $this->getUser();
+        if (method_exists($user, 'getFullName')) {
             return $user->getFullName();
         } elseif (method_exists($user, 'getName')) {
             return $user->getName();
