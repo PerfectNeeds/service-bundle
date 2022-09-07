@@ -28,7 +28,7 @@ trait VirtualDeleteTrait
         return $this;
     }
 
-    public function getDeleted(): bool|\DateTime
+    public function getDeleted(): \DateTime|bool|null
     {
         return $this->deleted;
     }
