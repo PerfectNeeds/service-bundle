@@ -3,6 +3,7 @@
 namespace PN\ServiceBundle\Twig;
 
 use Doctrine\ORM\EntityManagerInterface;
+use PN\ServiceBundle\Lib\UploadPath;
 use PN\ServiceBundle\Service\ContainerParameterService;
 use PN\ServiceBundle\Utils\Date;
 use PN\ServiceBundle\Utils\Number;
@@ -16,13 +17,33 @@ use Twig\Extension\RuntimeExtensionInterface;
 class VarsRuntime implements RuntimeExtensionInterface
 {
 
-    private $em;
     private $containerParameterService;
 
-    public function __construct(EntityManagerInterface $em, ContainerParameterService $containerParameterService)
+    public function __construct(ContainerParameterService $containerParameterService)
     {
         $this->containerParameterService = $containerParameterService;
-        $this->em = $em;
+    }
+
+    public function getFileContent($filePath): ?string
+    {
+        $projectDir = $this->containerParameterService->get("kernel.project_dir");
+        $publicDirectory = rtrim(UploadPath::getWebRoot(), '/');
+
+        if ($this->containerParameterService->has("default_uri")) {
+            $filePath = str_replace($this->containerParameterService->get("default_uri"), "", $filePath);
+        }
+
+        // todo: add caching
+        $fullFilePath = "{$projectDir}/{$publicDirectory}{$filePath}";
+
+        if (file_exists($fullFilePath)) {
+            $str = file_get_contents($fullFilePath);
+            $str = $this->removeSpaces($str);
+
+            return $this->removeComments($str);
+        }
+
+        return null;
     }
 
     public function getContainerParameter($name)
@@ -39,32 +60,32 @@ class VarsRuntime implements RuntimeExtensionInterface
         return null;
     }
 
-    public function className($object)
+    public function className($object): string
     {
         return (new \ReflectionClass($object))->getShortName();
     }
 
-    public function priceFormat($price)
+    public function priceFormat($price): string
     {
         return Number::currencyWithFormat($price, "EGP");
     }
 
-    public function dateFormat(\DateTime $date)
+    public function dateFormat(\DateTime $date): string
     {
         return $date->format(Date::DATE_FORMAT3);
     }
 
-    public function timeFormat(\DateTime $date)
+    public function timeFormat(\DateTime $date): string
     {
         return $date->format(Date::DATE_FORMAT_TIME);
     }
 
-    public function dateTimeFormat(\DateTime $date)
+    public function dateTimeFormat(\DateTime $date): string
     {
         return $date->format(Date::DATE_FORMAT6);
     }
 
-    public function currencyWithFormat($price)
+    public function currencyWithFormat($price): string
     {
         return Number::currencyWithFormat($price);
     }
@@ -87,12 +108,12 @@ class VarsRuntime implements RuntimeExtensionInterface
      * @param $instance
      * @return bool
      */
-    public function isInstanceof($var, $instance)
+    public function isInstanceof($var, $instance): bool
     {
         return $var instanceof $instance;
     }
 
-    public function rawurldecode($str)
+    public function rawurldecode($str): string
     {
         return rawurldecode($str);
     }
@@ -102,9 +123,32 @@ class VarsRuntime implements RuntimeExtensionInterface
         return json_decode($str);
     }
 
-    public function jsonEncode($str)
+    public function jsonEncode($str): string
     {
         return trim(json_encode($str), '"');
     }
 
+    /**
+     * Remove unnecessary spaces from a css string
+     * @param string $string
+     * @return string
+     **/
+    private function removeSpaces(string $string): string
+    {
+        $string = preg_replace("/\s{2,}/", " ", $string);
+        $string = str_replace("\n", "", $string);
+        $string = str_replace('@CHARSET "UTF-8";', "", $string);
+
+        return str_replace(', ', ",", $string);
+    }
+
+    /**
+     * Remove all comments from css string
+     * @param string $string
+     * @return string
+     **/
+    private function removeComments(string $string): string
+    {
+        return preg_replace("/(\/\*[\w\'\s\r\n\*\+\,\"\-\.]*\*\/)/", "", $string);
+    }
 }

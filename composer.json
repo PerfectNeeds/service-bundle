@@ -1,23 +1,27 @@
 {
-    "name": "perfectneeds/service-bundle",
-    "description": "All PN utils functions and twig functions",
-    "keywords": ["PerfectNeeds", "Service bundle"],
-    "homepage": "http://perfectneeds.github.com",
-    "type": "symfony-bundle",
-    "license": "MIT",
-    "authors": [
-        {
-            "name": "Peter Nassef",
-            "email": "peter.nassef@gmail.com"
-        }
-    ],
-    "require": {
-        "php": "^7.2|^8.0",
-        "symfony/framework-bundle": "~4.0|~5.0|~6.0"
-    },
-    "autoload": {
-        "psr-4": {
-            "PN\\ServiceBundle\\": ""
-        }
+  "name": "perfectneeds/service-bundle",
+  "description": "All PN utils functions and twig functions",
+  "keywords": [
+    "PerfectNeeds",
+    "Service bundle"
+  ],
+  "homepage": "http://perfectneeds.github.com",
+  "type": "symfony-bundle",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Peter Nassef",
+      "email": "peter.nassef@gmail.com"
     }
+  ],
+  "require": {
+    "php": "^7.2|^8.0",
+    "symfony/framework-bundle": "~4.0|~5.0|~6.0",
+    "symfony/cache": "^4.4|^5.0|^6.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "PN\\ServiceBundle\\": ""
+    }
+  }
 }
