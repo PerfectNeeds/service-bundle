@@ -11,10 +11,13 @@
             "email": "peter.nassef@gmail.com"
         }
     ],
+    "require": {
+        "php": ">=7.4",
+        "symfony/cache": "^3.4"
+    },
     "autoload": {
         "psr-4": {
             "PN\\ServiceBundle\\": ""
         }
-    },
-    "require": {}
+    }
 }

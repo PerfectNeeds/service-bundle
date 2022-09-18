@@ -11,9 +11,11 @@ use Twig\TwigTest;
  * @author Peter Nassef <peter.nassef@gmail.com>
  * @version 1.0
  */
-class VarsExtension extends AbstractExtension {
+class VarsExtension extends AbstractExtension
+{
 
-    public function getFilters() {
+    public function getFilters()
+    {
         return array(
             new TwigFilter('currencyWithFormat', array(VarsRuntime::class, 'currencyWithFormat')),
             new TwigFilter('rawText', array(VarsRuntime::class, 'rawText')),
@@ -26,23 +28,27 @@ class VarsExtension extends AbstractExtension {
             new TwigFilter('dateFormat', array(VarsRuntime::class, 'dateFormat')),
             new TwigFilter('timeFormat', array(VarsRuntime::class, 'timeFormat')),
             new TwigFilter('dateTimeFormat', array(VarsRuntime::class, 'dateTimeFormat')),
+            new TwigFilter('fileContent', array(VarsRuntime::class, 'getFileContent'), ["is_safe" => ["html"]]),
         );
     }
 
-    public function getFunctions() {
+    public function getFunctions()
+    {
         return array(
             new TwigFunction('getParameter', array(VarsRuntime::class, 'getContainerParameter')),
             new TwigFunction('staticVariable', array(VarsRuntime::class, 'staticVariable')),
         );
     }
 
-    public function getTests() {
+    public function getTests()
+    {
         return [
             new TwigTest('instanceof', array(VarsRuntime::class, 'isInstanceof')),
         ];
     }
 
-    public function getName() {
+    public function getName()
+    {
         return 'pn.service.twig.extension';
     }
 
