@@ -32,15 +32,15 @@ class VarsRuntime implements RuntimeExtensionInterface
             $filePath = str_replace($baseUrl, "", $filePath);
         }
 
-        // todo: add caching
         $fullFilePath = "{$projectDir}/{$publicDirectory}{$filePath}";
 
         if (file_exists($fullFilePath)) {
             $str = file_get_contents($fullFilePath);
             $str = $this->removeSpaces($str);
 
-            return   $this->removeComments($str);
+            return $this->removeComments($str);
         }
+
         return null;
     }
 
