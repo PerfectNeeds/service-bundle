@@ -33,7 +33,6 @@ class VarsRuntime implements RuntimeExtensionInterface
             $filePath = str_replace($this->containerParameterService->get("default_uri"), "", $filePath);
         }
 
-        // todo: add caching
         $fullFilePath = "{$projectDir}/{$publicDirectory}{$filePath}";
 
         if (file_exists($fullFilePath)) {
