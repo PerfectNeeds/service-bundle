@@ -8,15 +8,15 @@ trait VirtualDeleteTrait
     /**
      * @ORM\Column(type="datetime", nullable=true)
      */
-    protected $deleted = null;
+    private $deleted = null;
 
     /**
      * @ORM\Column(name="deleted_by", type="string", length=255, nullable=true)
      */
-    protected $deletedBy = null;
+    private $deletedBy = null;
 
 
-    public function setDeleted(bool|\DateTime $deleted): static
+    public function setDeleted(\DateTimeInterface $deleted): static
     {
         $this->deleted = $deleted;
         if (method_exists($this, 'getSeo') and $this->getSeo() != null) {
@@ -28,9 +28,18 @@ trait VirtualDeleteTrait
         return $this;
     }
 
-    public function getDeleted(): \DateTime|bool|null
+    public function getDeleted(): ?\DateTimeInterface
     {
         return $this->deleted;
+    }
+
+    public function isDeleted(): bool
+    {
+        if ($this->deleted instanceof \DateTimeInterface) {
+            return true;
+        }
+
+        return false;
     }
 
     public function setDeletedBy(string $deletedBy): static

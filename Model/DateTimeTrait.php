@@ -2,66 +2,75 @@
 
 namespace PN\ServiceBundle\Model;
 
-trait DateTimeTrait {
+trait DateTimeTrait
+{
 
     /**
      * @ORM\Column(type="datetime")
      */
-    protected $created;
+    private ?\DateTimeInterface $created = null;
 
     /**
      * @ORM\Column(name="creator", type="string", length=255)
      */
-    protected $creator;
+    private ?string $creator = null;
 
     /**
      * @ORM\Column(type="datetime")
      */
-    protected $modified;
+    private ?\DateTimeInterface $modified = null;
 
     /**
      * @ORM\Column(name="modified_by", type="string", length=255)
      */
-    protected $modifiedBy;
+    private ?string $modifiedBy = null;
 
 
-    public function setCreated($created) {
+    public function setCreated($created): static
+    {
         $this->created = $created;
 
         return $this;
     }
 
-    public function getCreated() {
+    public function getCreated(): ?\DateTimeInterface
+    {
         return $this->created;
     }
 
-    public function setCreator($creator) {
+    public function setCreator($creator): static
+    {
         $this->creator = $creator;
 
         return $this;
     }
 
-    public function getCreator() {
+    public function getCreator(): ?string
+    {
         return $this->creator;
     }
 
-    public function setModified($modified) {
+    public function setModified($modified): static
+    {
         $this->modified = $modified;
 
         return $this;
     }
 
-    public function getModified() {
+    public function getModified(): ?\DateTimeInterface
+    {
         return $this->modified;
     }
 
-    public function setModifiedBy($modifiedBy) {
+    public function setModifiedBy($modifiedBy): static
+    {
         $this->modifiedBy = $modifiedBy;
 
         return $this;
     }
 
-    public function getModifiedBy() {
+    public function getModifiedBy(): ?string
+    {
         return $this->modifiedBy;
     }
 
