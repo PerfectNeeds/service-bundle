@@ -2,7 +2,8 @@
 
 namespace PN\ServiceBundle\Model;
 
-trait VirtualDeleteTrait {
+trait VirtualDeleteTrait
+{
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
@@ -12,51 +13,43 @@ trait VirtualDeleteTrait {
     /**
      * @ORM\Column(name="deleted_by", type="string", length=255, nullable=true)
      */
-    protected $deletedBy = NULL;
+    protected $deletedBy = null;
 
-    /**
-     * Set deleted
-     *
-     * @param boolean $deleted
-     * @return Agent
-     */
-    public function setDeleted($deleted) {
+    public function setDeleted($deleted)
+    {
         $this->deleted = $deleted;
-        if (method_exists($this, 'getSeo') == true AND $this->getSeo() != NULL) {
+        if (method_exists($this, 'getSeo') == true and $this->getSeo() != null) {
             $this->getSeo()->setDeleted(true);
             $rand = substr(md5(microtime()), rand(0, 26), 5);
-            $this->getSeo()->SetSlug($this->getSeo()->getSlug() . '-del-' . $rand);
+            $this->getSeo()->SetSlug($this->getSeo()->getSlug().'-del-'.$rand);
         }
+
         return $this;
     }
 
-    /**
-     * Get deleted
-     *
-     * @return boolean
-     */
-    public function getDeleted() {
+    public function getDeleted()
+    {
         return $this->deleted;
     }
 
-    /**
-     * Set deletedBy
-     *
-     * @param string $deletedBy
-     * @return Agent
-     */
-    public function setDeletedBy($deletedBy) {
+    public function isDeleted()
+    {
+        if ($this->deleted instanceof \DateTimeInterface) {
+            return true;
+        }
+
+        return false;
+    }
+
+    public function setDeletedBy($deletedBy)
+    {
         $this->deletedBy = $deletedBy;
 
         return $this;
     }
 
-    /**
-     * Get deletedBy
-     *
-     * @return string
-     */
-    public function getDeletedBy() {
+    public function getDeletedBy()
+    {
         return $this->deletedBy;
     }
 
