@@ -1,29 +1,29 @@
 <?php
 
 namespace PN\ServiceBundle\Model;
-
+use Doctrine\ORM\Mapping as ORM;
 trait DateTimeTrait
 {
 
     /**
      * @ORM\Column(type="datetime")
      */
-    private ?\DateTimeInterface $created = null;
+    protected ?\DateTimeInterface $created = null;
 
     /**
      * @ORM\Column(name="creator", type="string", length=255)
      */
-    private ?string $creator = null;
+    protected ?string $creator = null;
 
     /**
      * @ORM\Column(type="datetime")
      */
-    private ?\DateTimeInterface $modified = null;
+    protected ?\DateTimeInterface $modified = null;
 
     /**
      * @ORM\Column(name="modified_by", type="string", length=255)
      */
-    private ?string $modifiedBy = null;
+    protected ?string $modifiedBy = null;
 
 
     public function setCreated($created): static

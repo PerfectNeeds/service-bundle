@@ -1,19 +1,19 @@
 <?php
 
 namespace PN\ServiceBundle\Model;
-
+use Doctrine\ORM\Mapping as ORM;
 trait VirtualDeleteTrait
 {
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
      */
-    private $deleted = null;
+    protected $deleted = null;
 
     /**
      * @ORM\Column(name="deleted_by", type="string", length=255, nullable=true)
      */
-    private $deletedBy = null;
+    protected $deletedBy = null;
 
 
     public function setDeleted(\DateTimeInterface $deleted): static
