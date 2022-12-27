@@ -16,35 +16,35 @@ class VarsExtension extends AbstractExtension
 
     public function getFilters()
     {
-        return array(
-            new TwigFilter('currencyWithFormat', array(VarsRuntime::class, 'currencyWithFormat')),
-            new TwigFilter('rawText', array(VarsRuntime::class, 'rawText')),
-            new TwigFilter('pn_json_decode', array(VarsRuntime::class, 'jsonDecode')),
-            new TwigFilter('pn_json_encode', array(VarsRuntime::class, 'jsonEncode')),
-            new TwigFilter('rawurldecode', array(VarsRuntime::class, 'rawurldecode')),
-            new TwigFilter('className', array(VarsRuntime::class, 'className')),
-            new TwigFilter('className', array(VarsRuntime::class, 'className')),
-            new TwigFilter('priceFormat', array(VarsRuntime::class, 'priceFormat')),
-            new TwigFilter('dateFormat', array(VarsRuntime::class, 'dateFormat')),
-            new TwigFilter('timeFormat', array(VarsRuntime::class, 'timeFormat')),
-            new TwigFilter('dateTimeFormat', array(VarsRuntime::class, 'dateTimeFormat')),
-            new TwigFilter('encodeEmail', [VarsRuntime::class, 'encodeEmailAddress']),
-            new TwigFilter('fileContent', array(VarsRuntime::class, 'getFileContent'), ["is_safe" => ["html"]]),
-        );
+        return [
+            new TwigFilter('currencyWithFormat', [VarsRuntime::class, 'currencyWithFormat']),
+            new TwigFilter('rawText', [VarsRuntime::class, 'rawText']),
+            new TwigFilter('pn_json_decode', [VarsRuntime::class, 'jsonDecode']),
+            new TwigFilter('pn_json_encode', [VarsRuntime::class, 'jsonEncode']),
+            new TwigFilter('rawurldecode', [VarsRuntime::class, 'rawurldecode']),
+            new TwigFilter('className', [VarsRuntime::class, 'className']),
+            new TwigFilter('className', [VarsRuntime::class, 'className']),
+            new TwigFilter('priceFormat', [VarsRuntime::class, 'priceFormat']),
+            new TwigFilter('dateFormat', [VarsRuntime::class, 'dateFormat']),
+            new TwigFilter('timeFormat', [VarsRuntime::class, 'timeFormat']),
+            new TwigFilter('dateTimeFormat', [VarsRuntime::class, 'dateTimeFormat']),
+            new TwigFilter('encodeEmail', [VarsRuntime::class, 'encodeEmailAddress'], ["is_safe" => ["html"]]),
+            new TwigFilter('fileContent', [VarsRuntime::class, 'getFileContent'], ["is_safe" => ["html"]]),
+        ];
     }
 
     public function getFunctions()
     {
-        return array(
-            new TwigFunction('getParameter', array(VarsRuntime::class, 'getContainerParameter')),
-            new TwigFunction('staticVariable', array(VarsRuntime::class, 'staticVariable')),
-        );
+        return [
+            new TwigFunction('getParameter', [VarsRuntime::class, 'getContainerParameter']),
+            new TwigFunction('staticVariable', [VarsRuntime::class, 'staticVariable']),
+        ];
     }
 
     public function getTests()
     {
         return [
-            new TwigTest('instanceof', array(VarsRuntime::class, 'isInstanceof')),
+            new TwigTest('instanceof', [VarsRuntime::class, 'isInstanceof']),
         ];
     }
 
