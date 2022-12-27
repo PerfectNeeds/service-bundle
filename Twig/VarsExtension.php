@@ -28,7 +28,7 @@ class VarsExtension extends AbstractExtension
             new TwigFilter('dateFormat', [VarsRuntime::class, 'dateFormat']),
             new TwigFilter('timeFormat', [VarsRuntime::class, 'timeFormat']),
             new TwigFilter('dateTimeFormat', [VarsRuntime::class, 'dateTimeFormat']),
-            new TwigFilter('encodeEmail', [VarsRuntime::class, 'encodeEmailAddress']),
+            new TwigFilter('encodeEmail', [VarsRuntime::class, 'encodeEmailAddress'], ["is_safe" => ["html"]]),
             new TwigFilter('fileContent', [VarsRuntime::class, 'getFileContent'], ["is_safe" => ["html"]]),
         ];
     }
