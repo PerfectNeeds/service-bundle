@@ -2,16 +2,17 @@
 
 namespace PN\ServiceBundle\Lib;
 
-class Paginator {
+class Paginator
+{
 
     private $pageLimit = 10;
     private $limitStart;
     private $limitEnd;
     private $pageNumber;
     private $totalItems;
-    private $numberOfpages = NULL;
-    private $start = NULL;
-    private $stop = NULL;
+    private $numberOfpages = null;
+    private $start = null;
+    private $stop = null;
 
     /**
      * paginate results
@@ -20,7 +21,8 @@ class Paginator {
      * @param $limit
      * @return array
      */
-    public function __construct($totalItems = 10, $page = 1, $pageLimit = 10) {
+    public function __construct($totalItems = 10, $page = 1, $pageLimit = 10)
+    {
         $this->pageNumber = $page;
         $this->totalItems = $totalItems;
         $this->pageLimit = $pageLimit;
@@ -33,7 +35,8 @@ class Paginator {
      *
      * @return int
      */
-    public function getLimitStart() {
+    public function getLimitStart()
+    {
         return $this->limitStart;
     }
 
@@ -42,7 +45,8 @@ class Paginator {
      *
      * @return int
      */
-    public function getLimitEnd() {
+    public function getLimitEnd()
+    {
         return $this->limitEnd;
     }
 
@@ -51,7 +55,8 @@ class Paginator {
      *
      * @return int
      */
-    private function getStart() {
+    private function getStart()
+    {
         return $this->start;
     }
 
@@ -60,8 +65,9 @@ class Paginator {
      *
      * @return int
      */
-    private function getStop() {
-        return (int) $this->stop;
+    private function getStop()
+    {
+        return (int)$this->stop;
     }
 
     /**
@@ -69,8 +75,9 @@ class Paginator {
      *
      * @return int
      */
-    public function getNumberOfpages() {
-        return (int) $this->numberOfpages;
+    public function getNumberOfpages()
+    {
+        return (int)$this->numberOfpages;
     }
 
     /**
@@ -78,33 +85,38 @@ class Paginator {
      *
      * @return int
      */
-    public function getPageLimit() {
-        return (int) $this->pageLimit;
+    public function getPageLimit()
+    {
+        return (int)$this->pageLimit;
     }
 
-    public function calculate() {
+    public function calculate()
+    {
         $radius = 2;
         $start = 1;
         $pageTotalNumber = ceil($this->totalItems / $this->pageLimit);
 
-        $stop = ( $pageTotalNumber < ( ($radius * 2) + 1) ) ? $pageTotalNumber : ( ($radius * 2) + 1 );
+        $stop = ($pageTotalNumber < (($radius * 2) + 1)) ? $pageTotalNumber : (($radius * 2) + 1);
         $pageNumber = $this->pageNumber;
 
         if ($pageNumber > $radius) {
             $start = $pageNumber - $radius;
-            $stop = ( $pageTotalNumber <= ($pageNumber + $radius) ) ? $pageTotalNumber : $pageNumber + $radius;
+            $stop = ($pageTotalNumber <= ($pageNumber + $radius)) ? $pageTotalNumber : $pageNumber + $radius;
         }
         $this->start = $start;
         $this->stop = $stop;
         $this->numberOfpages = $pageTotalNumber;
+
         return $this;
     }
 
-    public function getPagination() {
+    public function getPagination()
+    {
         $this->calculate();
 
         if ($this->pageNumber != 1) {
-            $return['fisrt'] = 1;
+            $return['fisrt'] = 1; // don't delete it because our website use this keyword with spelling mistake
+            $return['first'] = 1;
             $return['prev'] = $this->pageNumber - 1;
         }
 
@@ -118,10 +130,11 @@ class Paginator {
         }
 
         $return['show']['start'] = $this->limitStart + 1;
-        $return['show']['end'] = (($this->limitStart + 1 + $this->pageLimit) > $this->totalItems ) ? $this->totalItems : ($this->limitStart + $this->pageLimit);
+        $return['show']['end'] = (($this->limitStart + 1 + $this->pageLimit) > $this->totalItems) ? $this->totalItems : ($this->limitStart + $this->pageLimit);
         $return['ItemsPerPage'] = $this->pageLimit;
         $return['totalItems'] = $this->totalItems;
         $return['currentPage'] = $this->pageNumber;
+
         return $return;
     }
 
