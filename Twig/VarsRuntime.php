@@ -126,6 +126,15 @@ class VarsRuntime implements RuntimeExtensionInterface
         return trim(json_encode($str), '"');
     }
 
+    public function encodeEmailAddress( $email)
+    {
+        $output = '';
+        for ($i = 0; $i < strlen($email); $i++) {
+            $output .= '&#'.ord($email[$i]).';';
+        }
+
+        return $output;
+    }
     /**
      * Remove unnecessary spaces from a css string
      * @param String $string
