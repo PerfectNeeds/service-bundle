@@ -150,4 +150,14 @@ class VarsRuntime implements RuntimeExtensionInterface
     {
         return preg_replace("/(\/\*[\w\'\s\r\n\*\+\,\"\-\.]*\*\/)/", "", $string);
     }
+
+    private function encodeEmailAddress(string $email): string
+    {
+        $output = '';
+        for ($i = 0; $i < strlen($email); $i++) {
+            $output .= '&#'.ord($email[$i]).';';
+        }
+
+        return $output;
+    }
 }
