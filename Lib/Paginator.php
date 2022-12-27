@@ -104,7 +104,8 @@ class Paginator {
         $this->calculate();
 
         if ($this->pageNumber != 1) {
-            $return['fisrt'] = 1;
+            $return['fisrt'] = 1; // don't delete it because our website use this keyword with spelling mistake
+            $return['first'] = 1;
             $return['prev'] = $this->pageNumber - 1;
         }
 
