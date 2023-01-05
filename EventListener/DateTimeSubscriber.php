@@ -7,7 +7,7 @@ use Doctrine\ORM\Events;
 use Doctrine\Persistence\Event\LifecycleEventArgs;
 use PN\ServiceBundle\Interfaces\DateTimeInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
-
+use Symfony\Component\Security\Core\User\UserInterface;
 class DateTimeSubscriber implements EventSubscriberInterface
 {
     private $tokenStorage;
@@ -70,7 +70,7 @@ class DateTimeSubscriber implements EventSubscriberInterface
     private function getUserName(): string
     {
         $user = $this->getUser();
-        if (!$user instanceof User) {
+        if (!$user instanceof UserInterface) {
             return 'none';
         }
         if (method_exists($user, 'getName') == true) {
