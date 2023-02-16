@@ -136,6 +136,24 @@ class VarsRuntime implements RuntimeExtensionInterface
 
         return $output;
     }
+
+    public function enum(string $className): object
+    {
+        if (!is_subclass_of($className, \UnitEnum::class)) {
+            throw new \InvalidArgumentException(sprintf('"%s" is not an enum.', $className));
+        }
+
+        return new class ($className) {
+            public function __construct(private string $className)
+            {
+            }
+
+            public function __call(string $caseName, array $arguments): mixed
+            {
+                return ($this->className)::$caseName();
+            }
+        };
+    }
     
     /**
      * Remove unnecessary spaces from a css string

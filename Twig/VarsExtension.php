@@ -36,6 +36,7 @@ class VarsExtension extends AbstractExtension
     public function getFunctions(): array
     {
         return [
+            new TwigFunction('enum', [VarsRuntime::class, 'enum']),
             new TwigFunction('getParameter', [VarsRuntime::class, 'getContainerParameter']),
             new TwigFunction('staticVariable', [VarsRuntime::class, 'staticVariable']),
         ];
