@@ -101,7 +101,7 @@ class VarsRuntime implements RuntimeExtensionInterface
     }
 
     /**
-     * {{ dump(entity is instanceof("\\App\\ProductBundle\\Entity\\Category::class")) }}
+     * {{ dump(entity is instanceof("\\App\\ProductBundle\\Entity\\Category")) }}
      * @param $var
      * @param $instance
      * @return bool
