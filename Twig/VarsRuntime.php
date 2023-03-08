@@ -2,12 +2,10 @@
 
 namespace PN\ServiceBundle\Twig;
 
-use Doctrine\ORM\EntityManagerInterface;
 use PN\ServiceBundle\Lib\UploadPath;
 use PN\ServiceBundle\Service\ContainerParameterService;
 use PN\ServiceBundle\Utils\Date;
 use PN\ServiceBundle\Utils\Number;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Twig\Extension\RuntimeExtensionInterface;
 
 /**
@@ -103,6 +101,8 @@ class VarsRuntime implements RuntimeExtensionInterface
     }
 
     /**
+     * {{ dump(entity is instanceof("\\App\\ProductBundle\\Entity\\Category::class")) }}
+
      * @param $var
      * @param $instance
      * @return bool
