@@ -153,7 +153,23 @@ class VarsRuntime implements RuntimeExtensionInterface
             }
         };
     }
-    
+
+
+    public function convertHex2RGB($hexColor): string
+    {
+        $values = str_replace('#', '', $hexColor);
+        switch (strlen($values)) {
+            case 3;
+                list($r, $g, $b) = sscanf($values, "%1s%1s%1s");
+
+                return implode([hexdec("$r$r"), hexdec("$g$g"), hexdec("$b$b")], ", ");
+            case 6;
+                return implode(array_map('hexdec', sscanf($values, "%2s%2s%2s")), ", ");
+            default:
+                return "";
+        }
+    }
+
     /**
      * Remove unnecessary spaces from a css string
      * @param string $string
