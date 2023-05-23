@@ -1,12 +1,14 @@
 <?php
 
 namespace PN\ServiceBundle\Model;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 trait UuidTrait
 {
     /**
      * @ORM\Column(name="uuid", type="string", length=50, unique=true)
      */
+    #[ORM\Column(name: "uuid", type: Types::STRING, length: 50, unique: true)]
     protected $uuid;
 
     public function getUuid(): ?string

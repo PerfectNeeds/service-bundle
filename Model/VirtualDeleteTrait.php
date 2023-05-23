@@ -1,6 +1,7 @@
 <?php
 
 namespace PN\ServiceBundle\Model;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 trait VirtualDeleteTrait
 {
@@ -8,11 +9,13 @@ trait VirtualDeleteTrait
     /**
      * @ORM\Column(type="datetime", nullable=true)
      */
+    #[ORM\Column(name: "deleted", type: Types::DATETIME_MUTABLE, nullable: true)]
     protected $deleted = null;
 
     /**
      * @ORM\Column(name="deleted_by", type="string", length=255, nullable=true)
      */
+    #[ORM\Column(name: "deleted_by", type: Types::STRING, length: 255, nullable: true)]
     protected $deletedBy = null;
 
 
