@@ -159,4 +159,18 @@ class VarsRuntime implements RuntimeExtensionInterface
     {
         return preg_replace("/(\/\*[\w\'\s\r\n\*\+\,\"\-\.]*\*\/)/", "", $string);
     }
+    public function convertHex2RGB($hexColor)
+    {
+        $values = str_replace('#', '', $hexColor);
+        switch (strlen($values)) {
+            case 3;
+                list($r, $g, $b) = sscanf($values, "%1s%1s%1s");
+
+                return implode(", ", [hexdec("$r$r"), hexdec("$g$g"), hexdec("$b$b")]);
+            case 6;
+                return implode(", ", array_map('hexdec', sscanf($values, "%2s%2s%2s")));
+            default:
+                return "";
+        }
+    }
 }
