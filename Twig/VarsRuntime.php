@@ -94,7 +94,7 @@ class VarsRuntime implements RuntimeExtensionInterface
         $str = str_replace($search, '', $str);
 
         if ($length != null and strlen($str) > $length) {
-            $str = htmlspecialchars_decode(substr($str, 0, strpos(wordwrap($str, $length), "\n"))).'...';
+            $str = htmlspecialchars_decode(substr($str, 0, strpos(wordwrap($str, $length), "\n"))) . '...';
         }
 
         return $str;
@@ -130,7 +130,7 @@ class VarsRuntime implements RuntimeExtensionInterface
     {
         $output = '';
         for ($i = 0; $i < strlen($email); $i++) {
-            $output .= '&#'.ord($email[$i]).';';
+            $output .= '&#' . ord($email[$i]) . ';';
         }
 
         return $output;
@@ -162,9 +162,9 @@ class VarsRuntime implements RuntimeExtensionInterface
             case 3;
                 list($r, $g, $b) = sscanf($values, "%1s%1s%1s");
 
-                return implode([hexdec("$r$r"), hexdec("$g$g"), hexdec("$b$b")], ", ");
+                return implode(", ", [hexdec("$r$r"), hexdec("$g$g"), hexdec("$b$b")]);
             case 6;
-                return implode(array_map('hexdec', sscanf($values, "%2s%2s%2s")), ", ");
+                return implode(", ", array_map('hexdec', sscanf($values, "%2s%2s%2s")));
             default:
                 return "";
         }
