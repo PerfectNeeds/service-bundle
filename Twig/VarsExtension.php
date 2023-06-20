@@ -30,7 +30,6 @@ class VarsExtension extends AbstractExtension
             new TwigFilter('dateTimeFormat', [VarsRuntime::class, 'dateTimeFormat']),
             new TwigFilter('encodeEmail', [VarsRuntime::class, 'encodeEmailAddress'], ["is_safe" => ["html"]]),
             new TwigFilter('fileContent', [VarsRuntime::class, 'getFileContent'], ["is_safe" => ["html"]]),
-            new TwigFilter('convertHexToRgb', [VarsRuntime::class, 'convertHex2RGB']),
         ];
     }
 
@@ -39,6 +38,7 @@ class VarsExtension extends AbstractExtension
         return [
             new TwigFunction('getParameter', [VarsRuntime::class, 'getContainerParameter']),
             new TwigFunction('staticVariable', [VarsRuntime::class, 'staticVariable']),
+            new TwigFunction('convertHexToRgb', [VarsRuntime::class, 'convertHex2RGB']),
         ];
     }
 
