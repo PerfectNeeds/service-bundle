@@ -26,6 +26,9 @@ class UserService
         }
 
         $user = $this->getUser();
+        if ($user == null) {
+            return "none";
+        }
         if (method_exists($user, 'getFullName')) {
             return $user->getFullName();
         } elseif (method_exists($user, 'getName')) {
