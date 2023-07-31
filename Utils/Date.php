@@ -7,17 +7,17 @@ class Date
 
     public static $timezoneOffset;
 
-    CONST DATE_FORMAT1 = 'Y-m-d H:i:s';
-    CONST DATE_FORMAT2 = 'Y-m-d';
-    CONST DATE_FORMAT3 = 'd/m/Y';
-    CONST DATE_FORMAT4 = 'Y-m';
-    CONST DATE_FORMAT5 = 'm/Y';
-    CONST DATE_FORMAT6 = 'd/m/Y h:i A';
-    CONST DATE_FORMAT7 = 'd M Y';
-    CONST DATE_FORMAT_D = 'd';
-    CONST DATE_FORMAT_M = 'm';
-    CONST DATE_FORMAT_Y = 'Y';
-    CONST DATE_FORMAT_TIME = 'h:i A';
+    const DATE_FORMAT1 = 'Y-m-d H:i:s';
+    const DATE_FORMAT2 = 'Y-m-d';
+    const DATE_FORMAT3 = 'd/m/Y';
+    const DATE_FORMAT4 = 'Y-m';
+    const DATE_FORMAT5 = 'm/Y';
+    const DATE_FORMAT6 = 'd/m/Y h:i A';
+    const DATE_FORMAT7 = 'd M Y';
+    const DATE_FORMAT_D = 'd';
+    const DATE_FORMAT_M = 'm';
+    const DATE_FORMAT_Y = 'Y';
+    const DATE_FORMAT_TIME = 'h:i A';
 
     public function __construct()
     {
@@ -41,17 +41,17 @@ class Date
      */
     private static function setTimezoneOffset($country = null)
     {
-        $origin_dtz = New \DateTimeZone($country);
-        $remote_dtz = New \DateTimeZone("Etc/GMT");
-        $origin_dt = New \DateTime("now", $origin_dtz);
-        $remote_dt = New \DateTime("now", $remote_dtz);
+        $origin_dtz = new \DateTimeZone($country);
+        $remote_dtz = new \DateTimeZone("Etc/GMT");
+        $origin_dt = new \DateTime("now", $origin_dtz);
+        $remote_dt = new \DateTime("now", $remote_dtz);
         $offset = $origin_dtz->getOffset($origin_dt) - $remote_dtz->getOffset($remote_dt);
         static::$timezoneOffset = $offset;
     }
 
     public function getTimezoneOffset()
     {
-        return static::timezoneOffset;
+        return static::$timezoneOffset;
     }
 
     /**
@@ -69,32 +69,33 @@ class Date
         $day = false,
         $timeFormat = false,
         $separator = '-'
-    ) {
+    )
+    {
         self::open();
 
-        if (!$year AND !$month AND !$day AND !$timeFormat AND $separator == '-') {
+        if (!$year and !$month and !$day and !$timeFormat and $separator == '-') {
             return date(self::DATE_FORMAT1);
         }
 
 
-        if ($year AND $month AND $day) {
-            $date_string = self::DATE_FORMAT_Y.$separator.self::DATE_FORMAT_M.$separator.self::DATE_FORMAT_D;
-        } elseif ($year AND $month) {
-            $date_string = self::DATE_FORMAT_Y.$separator.self::DATE_FORMAT_M;
-        } elseif ($year AND !self::DATE_FORMAT_M AND !$day AND !$timeFormat) {
+        if ($year and $month and $day) {
+            $date_string = self::DATE_FORMAT_Y . $separator . self::DATE_FORMAT_M . $separator . self::DATE_FORMAT_D;
+        } elseif ($year and $month) {
+            $date_string = self::DATE_FORMAT_Y . $separator . self::DATE_FORMAT_M;
+        } elseif ($year and !self::DATE_FORMAT_M and !$day and !$timeFormat) {
             $date_string = self::DATE_FORMAT_Y;
-        } elseif ($year AND !$month AND !$day AND !$timeFormat) {
+        } elseif ($year and !$month and !$day and !$timeFormat) {
             $date_string = self::DATE_FORMAT_Y;
-        } elseif (!$year AND $month AND !$day AND !$timeFormat) {
+        } elseif (!$year and $month and !$day and !$timeFormat) {
             $date_string = self::DATE_FORMAT_M;
-        } elseif (!$year AND !$month AND $day AND !$timeFormat) {
+        } elseif (!$year and !$month and $day and !$timeFormat) {
             $date_string = self::DATE_FORMAT_D;
-        } elseif (!$year AND $month AND $day AND !$timeFormat) {
-            $date_string = self::DATE_FORMAT_M.$separator.self::DATE_FORMAT_D;
-        } elseif (!$year AND !$month AND !$day AND $timeFormat) {
+        } elseif (!$year and $month and $day and !$timeFormat) {
+            $date_string = self::DATE_FORMAT_M . $separator . self::DATE_FORMAT_D;
+        } elseif (!$year and !$month and !$day and $timeFormat) {
             $date_string = $timeFormat;
         } else {
-            $date_string = self::DATE_FORMAT_Y.$separator.self::DATE_FORMAT_M.$separator.self::DATE_FORMAT_D." ".$timeFormat;
+            $date_string = self::DATE_FORMAT_Y . $separator . self::DATE_FORMAT_M . $separator . self::DATE_FORMAT_D . " " . $timeFormat;
         }
 
 
@@ -161,7 +162,7 @@ class Date
         return date("W", strtotime("$offset day"));
     }
 
-    public static function getMonthLenght($month = false, $year = false)
+    public static function getMonthLenght($month = false, $year = false): int
     {
         $monthNum = ($month) ? ltrim($month, 0) : ltrim(self::getDatetimeNow(false, true), 0);
 
@@ -170,8 +171,7 @@ class Date
         $gregorian_leap_flag = !(($year) % 4);
 
         if (!$gregorian_leap_flag) {
-            $gregorian_months_lenght = array
-            (
+            $gregorian_months_length = [
                 "1" => 31,
                 "2" => 28,
                 "3" => 31,
@@ -184,10 +184,9 @@ class Date
                 "10" => 31,
                 "11" => 30,
                 "12" => 31,
-            );
+            ];
         } else {
-            $gregorian_months_lenght = array
-            (
+            $gregorian_months_length = [
                 "1" => 31,
                 "2" => 29,
                 "3" => 31,
@@ -200,31 +199,29 @@ class Date
                 "10" => 31,
                 "11" => 30,
                 "12" => 31,
-            );
+            ];
         }
 
-        return $gregorian_months_lenght[$monthNum];
+        return $gregorian_months_length[$monthNum];
     }
 
     /**
-     * @param DateTime $first_date by this formate: 2013-01-12 05:08:16
-     * @param DateTime $second_date by this formate: 2013-01-12 05:08:16
      * @return string Formatted interval string like Facebook.
      * @author Peter Nassef <peter.nassef@gmail.com>
      *
      */
-    public static function dateTimeDiffLikeFacebook($date)
+    public static function dateTimeDiffLikeFacebook($date, $locale = "en"): string
     {
 
         if (empty($date)) {
             return "No date provided";
         }
 
-        switch (Localization::SYSTEM_LANGUAGE) {
-            case 'ar_EG':
+        switch ($locale) {
+            case 'ar':
                 $periods = array("ثواني", "دقيقة", "ساعة", "يوم", "أسبوع", "شهر", "سنة", "عقد");
                 break;
-            case 'en_US':
+            case 'en':
                 $periods = array("second", "minute", "hour", "day", "week", "month", "year", "decade");
                 break;
         }
@@ -238,11 +235,11 @@ class Date
         // is it future date or past date
         if ($now > $unix_date) {
             $difference = $now - $unix_date;
-            switch (Localization::SYSTEM_LANGUAGE) {
-                case 'ar_EG':
+            switch ($locale) {
+                case 'ar':
                     $tense = "منذ";
                     break;
-                case 'en_US':
+                case 'en':
                     $tense = "ago";
                     break;
             }
@@ -260,14 +257,13 @@ class Date
         //        if ($difference != 1) {
         //            $periods[$j].= "s";
         //        }
-        switch (Localization::SYSTEM_LANGUAGE) {
-            case 'ar_EG':
+        switch ($locale) {
+            case 'ar':
                 return "{$tense} $difference $periods[$j]";
-                break;
-            case 'en_US':
+            case 'en':
                 return "$difference $periods[$j] {$tense}";
-                break;
         }
+        return "";
     }
 
     public static function addTodate(
@@ -277,7 +273,8 @@ class Date
         $format = false,
         $time = false,
         $operation = false
-    ) {
+    )
+    {
         $currentDate = self::getDatetimeNow();
 
         $operation = (!$operation) ? '+' : '-';
@@ -285,19 +282,19 @@ class Date
 
             $time = ($time) ? ' h:i:s' : '';
 
-            $format = self::DATE_FORMAT2.$time;
+            $format = self::DATE_FORMAT2 . $time;
         }
 
         if (is_numeric($year)) {
-            $newDate = strtotime(date(self::DATE_FORMAT1, strtotime($currentDate))." ".$operation.$year." years");
+            $newDate = strtotime(date(self::DATE_FORMAT1, strtotime($currentDate)) . " " . $operation . $year . " years");
         }
 
         if (is_numeric($month)) {
-            $newDate = strtotime(date(self::DATE_FORMAT1, strtotime($currentDate))." ".$operation.$month." month");
+            $newDate = strtotime(date(self::DATE_FORMAT1, strtotime($currentDate)) . " " . $operation . $month . " month");
         }
 
         if (is_numeric($day)) {
-            $newDate = strtotime(date(self::DATE_FORMAT1, strtotime($day))." ".$operation.$day." days");
+            $newDate = strtotime(date(self::DATE_FORMAT1, strtotime($day)) . " " . $operation . $day . " days");
         }
 
 
@@ -312,23 +309,24 @@ class Date
         $format = false,
         $time = false,
         $operation = false
-    ) {
+    )
+    {
         $operation = (!$operation) ? '+' : '-';
         if (!$format) {
             $time = ($time) ? ' h:i:s' : '';
-            $format = self::DATE_FORMAT2.$time;
+            $format = self::DATE_FORMAT2 . $time;
         }
 
         if (is_numeric($year)) {
-            $newDate = strtotime(date(self::DATE_FORMAT1, strtotime($date))." ".$operation.$year." years");
+            $newDate = strtotime(date(self::DATE_FORMAT1, strtotime($date)) . " " . $operation . $year . " years");
         }
 
         if (is_numeric($month)) {
-            $newDate = strtotime(date(self::DATE_FORMAT1, strtotime($date))." ".$operation.$month." month");
+            $newDate = strtotime(date(self::DATE_FORMAT1, strtotime($date)) . " " . $operation . $month . " month");
         }
 
         if (is_numeric($day)) {
-            $newDate = strtotime(date(self::DATE_FORMAT1, strtotime($date))." ".$operation.$day." days");
+            $newDate = strtotime(date(self::DATE_FORMAT1, strtotime($date)) . " " . $operation . $day . " days");
         }
 
         return date($format, $newDate);
@@ -336,10 +334,10 @@ class Date
 
     /**
      * if get difference between tow dates
-     * @author Peter Nassef <peter.nassef@gmail.com>
      * @param $date1
      * @param $date2
      * @return false|float (Days only not hour or minute)
+     * @author Peter Nassef <peter.nassef@gmail.com>
      */
     public static function dateDiffByDays($date1, $date2)
     {
@@ -352,10 +350,10 @@ class Date
     }
 
     /**
-     * @author Peter Nassef <peter.nassef@gmail.com>
      * @param $now
      * @param $expiryDate
      * @return bool
+     * @author Peter Nassef <peter.nassef@gmail.com>
      */
     public static function dateDiff($now, $expiryDate)
     {
@@ -384,25 +382,43 @@ class Date
      * @author Peter Nassef <peter.nassef@gmail.com>
      * @example Date::convertDateFormat('21/03/2010', 'd/m/Y', 'd-m-Y')
      */
-    public static function convertDateFormat($date, $fromFormat, $toFormat)
+    public static function convertDateFormat($date, $fromFormat, $toFormat): string
     {
         $date = trim($date);
 
-        return $myDateTime = \DateTime::createFromFormat($fromFormat, $date)->format($toFormat);
+        return \DateTime::createFromFormat($fromFormat, $date)->format($toFormat);
     }
 
-    public static function convertTimeToGMTIsoFormate(\DateTime $date)
+    public static function convertTimeToGMTIsoFormate(\DateTimeInterface $date): string
     {
         $date->setTimezone(new \DateTimeZone('GMT'));
 
         return $date->format("H:i:sO");
     }
 
-    public static function convertDateToGMTIsoFormate(\DateTime $date)
+    /*
+     * @deprecated use convertDateToGMTAtomFormat() instead of convertDateToGMTIsoFormate()
+     */
+    public static function convertDateToGMTIsoFormate(\DateTimeInterface $date): string
+    {
+        return self::convertDateToGMTIsoFormat($date);
+    }
+
+    /*
+     * @deprecated use convertDateToGMTAtomFormat() instead of convertDateToGMTIsoFormat()
+     */
+    public static function convertDateToGMTIsoFormat(\DateTimeInterface $date): string
     {
         $date->setTimezone(new \DateTimeZone('GMT'));
 
-        return $date->format(\DateTime::ISO8601);
+        return $date->format(\DateTimeInterface::ISO8601);
+    }
+
+    public static function convertDateToGMTAtomFormat(\DateTimeInterface $date): string
+    {
+        $date->setTimezone(new \DateTimeZone('GMT'));
+
+        return $date->format(\DateTimeInterface::ATOM);
     }
 
     public static function convertDateFormatToDateTime($date, $fromFormat)
@@ -422,5 +438,3 @@ class Date
         return $minutes;
     }
 }
-
-?>
