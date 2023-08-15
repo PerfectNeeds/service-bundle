@@ -258,4 +258,17 @@ class General {
         }
         return $randomString;
     }
+
+    /**
+     * @param string $fullName
+     * @return array[FirstName, LastName]
+     */
+    public function splitFullName( $fullName)
+    {
+        $fullName = trim($fullName);
+        $lastName = (strpos($fullName, ' ') === false) ? '' : preg_replace('#.*\s([\w-]*)$#', '$1', $fullName);
+        $firstName = trim(preg_replace('#' . preg_quote($lastName, '#') . '#', '', $fullName));
+
+        return [$firstName, $lastName];
+    }
 }
