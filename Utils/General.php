@@ -2,14 +2,16 @@
 
 namespace PN\ServiceBundle\Utils;
 
-class General {
+class General
+{
     /*
      * @version      : 1
      * @author       : Peter Soliman <peter.samy@gmail.com>
      * Description   : function to Convert Array of Objects to One dimentional array
      */
 
-    public static function objectsToArr($objectsARR, $varName) {
+    public static function objectsToArr($objectsARR, $varName)
+    {
         $arrayVarValues = array();
         foreach ($objectsARR as $object) {
             array_push($arrayVarValues, $object->$varName);
@@ -23,7 +25,8 @@ class General {
      * Description   : checks if a given date is included in an interval
      */
 
-    public static function dateInBetween($date, $startDate, $endDate) {
+    public static function dateInBetween($date, $startDate, $endDate)
+    {
         if ((strtotime($date) - strtotime($startDate)) >= 0 && (strtotime($endDate) - strtotime($date)) >= 0)
             return TRUE;
         else
@@ -36,7 +39,8 @@ class General {
      * Description   : checks if a given date is included in an interval
      */
 
-    public static function slug($string) {
+    public static function slug($string)
+    {
         return self::toAscii(trim($string));
     }
 
@@ -47,9 +51,10 @@ class General {
      * @param string $delimiter
      * @return string
      */
-    public static function toAscii($str, $replace = array(), $delimiter = '-') {
+    public static function toAscii($str, $replace = array(), $delimiter = '-')
+    {
         if (!empty($replace)) {
-            $str = str_replace((array) $replace, ' ', $str);
+            $str = str_replace((array)$replace, ' ', $str);
         }
 
         $clean = iconv('UTF-8', 'ASCII//TRANSLIT', $str);
@@ -67,7 +72,8 @@ class General {
      * attributes    : DateTime  objects
      */
 
-    public static function dateDiffrence($startDate, $endDate) {
+    public static function dateDiffrence($startDate, $endDate)
+    {
         return $endDate - $startDate;
     }
 
@@ -78,7 +84,8 @@ class General {
      * attributes    :string
      */
 
-    public static function seoUrl($string) {
+    public static function seoUrl($string)
+    {
         return Slug::sanitize($string);
     }
 
@@ -89,7 +96,8 @@ class General {
      * attributes    :string  
      */
 
-    public static function yearMonths() {
+    public static function yearMonths()
+    {
         $months = array(
             1 => array("Ar" => "يناير", "En" => "January"),
             2 => array("Ar" => "فبراير", "En" => "February"),
@@ -114,7 +122,8 @@ class General {
      * attributes    :string
      */
 
-    public static function transDateToArabic($date) {
+    public static function transDateToArabic($date)
+    {
 
         $transFrom = array(
             "January",
@@ -191,19 +200,22 @@ class General {
         return str_replace($transFrom, $transTo, $date);
     }
 
-    public function rawText($str, $length = null) {
+    public function rawText($str, $length = null)
+    {
         $str = strip_tags($str);
-        if ($length != null AND strlen($str) > $length) {
+        if ($length != null and strlen($str) > $length) {
             $str = htmlspecialchars_decode(substr($str, 0, strpos(wordwrap($str, $length), "\n"))) . '...';
         }
         return $str;
     }
 
-    public static function generateRandString() {
+    public static function generateRandString()
+    {
         return md5(uniqid(rand(), true));
     }
 
-    public static function fileSizeConvert($bytes) {
+    public static function fileSizeConvert($bytes)
+    {
 
         $result = "";
 
@@ -241,7 +253,8 @@ class General {
         return $result;
     }
 
-    public static function fromCamelCaseToUnderscore($input) {
+    public static function fromCamelCaseToUnderscore($input)
+    {
         preg_match_all('!([A-Z][A-Z0-9]*(?=$|[A-Z][a-z0-9])|[A-Za-z][a-z0-9]+)!', $input, $matches);
         $ret = $matches[0];
         foreach ($ret as &$match) {
@@ -249,7 +262,9 @@ class General {
         }
         return implode('_', $ret);
     }
-    function generateRandomString($length = 10) {
+
+    public function generateRandomString($length = 10): string
+    {
         $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
         $charactersLength = strlen($characters);
         $randomString = '';
@@ -257,5 +272,18 @@ class General {
             $randomString .= $characters[rand(0, $charactersLength - 1)];
         }
         return $randomString;
+    }
+
+    /**
+     * @param string $fullName
+     * @return array[FirstName, LastName]
+     */
+    public function splitFullName(string $fullName): array
+    {
+        $fullName = trim($fullName);
+        $lastName = (strpos($fullName, ' ') === false) ? '' : preg_replace('#.*\s([\w-]*)$#', '$1', $fullName);
+        $firstName = trim(preg_replace('#' . preg_quote($lastName, '#') . '#', '', $fullName));
+
+        return [$firstName, $lastName];
     }
 }
