@@ -263,7 +263,7 @@ class General
         return implode('_', $ret);
     }
 
-    public function generateRandomString($length = 10): string
+    public static function generateRandomString($length = 10): string
     {
         $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
         $charactersLength = strlen($characters);
@@ -278,7 +278,7 @@ class General
      * @param string $fullName
      * @return array[FirstName, LastName]
      */
-    public function splitFullName(string $fullName): array
+    public static function splitFullName(string $fullName): array
     {
         $fullName = trim($fullName);
         $lastName = (strpos($fullName, ' ') === false) ? '' : preg_replace('#.*\s([\w-]*)$#', '$1', $fullName);
